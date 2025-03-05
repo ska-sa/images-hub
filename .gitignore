@@ -28,21 +28,21 @@ configuration/.env
 /bazel-out
 
 # Node
-/node_modules
-npm-debug.log
-yarn-error.log
+frontend/node_modules
+frontend/npm-debug.log
+frontend/yarn-error.log
 
 # IDEs and editors
-.idea/
-.project
-.classpath
-.c9/
+frontend/.idea/
+frontend/.project
+frontend/.classpath
+frontend/.c9/
 *.launch
 .settings/
 *.sublime-workspace
 
 # Visual Studio Code
-.vscode/*
+frontend/.vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
@@ -50,17 +50,17 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
-.sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
-testem.log
-/typings
+frontend/.angular/cache
+frontend/.sass-cache/
+frontend/connect.lock
+frontend/coverage
+frontend/libpeerconnection.log
+frontend/testem.log
+frontend/typings
 
 # System files
-.DS_Store
-Thumbs.db
+frontend/.DS_Store
+frontend/Thumbs.db
 
 # Environment files
-environments
+frontend/src/environments
