@@ -21,8 +21,8 @@ class Database:
 
             CREATE TABLE IF NOT EXISTS image(
                 `id` INTEGER PRIMARY KEY AUTOINCREMENT,
-                `high_res_img_fname` TEXT UNIQUE,
-                `low_res_img_fname` TEXT UNIQUE,
+                `high_res_img_url` TEXT UNIQUE,
+                `low_res_img_url` TEXT UNIQUE,
                 `metadata` TEXT DEFAULT '{}',
                 `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
             );
