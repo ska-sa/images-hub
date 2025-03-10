@@ -11,7 +11,7 @@ from flask_cors import CORS  # type: ignore
 from dotenv import load_dotenv, set_key
 from endpoints.emails import send_email
 from endpoints.users import get_users, get_user, post_user, auth, google_auth, put_user, delete_user
-from endpoints.images import get_images, get_image, serve_image, post_image, put_image, delete_image
+from endpoints.images import get_images, get_image, get_image_s3_url, post_image, put_image, delete_image
 from endpoints.requests import get_requests, get_request, post_request, put_request, delete_request
 from endpoints.links import get_links, get_link, download_image, post_link, put_link, delete_link
 
@@ -128,9 +128,11 @@ def get_image_route(id: int):
     return get_image(id)
 
 @app.route('/api/v2/images/<string:filename>', methods=['GET'])
-def serve_route(filename: str):
-    return serve_image(filename)
-
+def get_s3_image_url_route(filename: str):
+    validation_response = backend.validate_api_key()
+    if validation_response:
+        return validation_response
+    return get_image_s3_url(filename)
 
 @app.route('/api/v2/images', methods=['POST'])
 def post_images_route():
