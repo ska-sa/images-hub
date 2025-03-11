@@ -1,11 +1,11 @@
 import os
 from dotenv import load_dotenv
-from flask import request, jsonify, send_from_directory, abort
+from flask import request, jsonify, redirect, abort
 from classes.link import Link
 from classes.image import Image
 from classes.database import Database
+from endpoints.images import generate_presigned_url
 
-SERVER_DIRECTORY = os.getenv('SERVER_DIRECTORY')
 
 def get_links() -> tuple:
     """
@@ -86,9 +86,11 @@ def download_image(key: str) -> tuple:
                 image = images_list[0]
                 img = Image(*image)
                 filename = img.high_res_image_filename
+                high_res_bucket = "high-res"
                 lnk.limit = lnk.limit - 1
                 if db.update(table_name, {'limit': lnk.limit},{'id': lnk.id}):
-                    return send_from_directory(SERVER_DIRECTORY, filename, as_attachment=True)
+                    high_res_download_url = generate_presigned_url(high_res_bucket, filename)
+                    return redirect(high_res_download_url)
                 else:
                     return jsonify({"message": "Link update failed."}), 404
             else:
