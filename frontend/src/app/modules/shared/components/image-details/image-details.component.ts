@@ -9,27 +9,12 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 export class ImageDetailsComponent {
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { imageUrl: string, filename: string },
-    private dialogRef: MatDialogRef<ImageDetailsComponent> // Inject MatDialogRef
+    private dialogRef: MatDialogRef<ImageDetailsComponent>
   ) {}
 
-  async downloadImage(): Promise<void> {
-    try {
-      const response = await fetch(this.data.imageUrl);
-      const blob = await response.blob();
-      const a = document.createElement('a');
-      const blobUrl = URL.createObjectURL(blob);
-      
-      a.href = blobUrl; // Use the Blob URL for downloading
-      a.download = this.data.filename || 'download'; // Set the filename for download
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
-      
-      // Clean up the Blob URL
-      URL.revokeObjectURL(blobUrl);
-    } catch (error) {
-      console.error('Error downloading file:', error);
-    }
+  downloadImage(): void {
+    // Directly set the window location to the image URL
+    window.location.href = this.data.imageUrl;
   }
 
   close(): void {

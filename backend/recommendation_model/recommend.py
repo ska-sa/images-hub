@@ -3,8 +3,8 @@ from datetime import datetime, timedelta
 import math
 import matplotlib.pyplot as plt
 from classes.image import Image
-from classes.request import Request
-from classes.link import Link
+from backend.classes.request import Request
+from backend.classes.link import Link
 
 def recommend(images: list[Image], requests: list[Request], links: list[Link]) -> list[tuple[Image, list[tuple[datetime, float]]]]:
     image_timestamp_scores_score_list: list[tuple[Image, list[tuple[datetime, float]], float]] = []
@@ -88,17 +88,17 @@ def test_recommend():
     while images or requests or links:
         if images:
             oldest_image = images.pop(0)
-            print(f"Popped oldest image: {oldest_image.id}, {oldest_image.created_at}")
+            print(f"Popped oldest image: {oldest_image.id}, {oldest_image.timestamp}")
         elif requests:
             oldest_request = requests.pop(0)
-            print(f"Popped oldest request: {oldest_request.id}, {oldest_request.created_at}")
+            print(f"Popped oldest request: {oldest_request.id}, {oldest_request.timestamp}")
         elif links:
             oldest_link = links.pop(0)
-            print(f"Popped oldest link: {oldest_link.id}, {oldest_link.created_at}")
+            print(f"Popped oldest link: {oldest_link.id}, {oldest_link.timestamp}")
 
         sorted_images = recommend(images, requests, links)
-        #latest_timestamp = max([image.created_at for image in sorted_images] + [request.created_at for request in requests] + [link.created_at for link in links])
+        latest_timestamp = max([image.timestamp for image in sorted_images] + [request.timestamp for request in requests] + [link.timestamp for link in links])
         plot_image_scores(sorted_images)
-        #print(f"Latest timestamp: {latest_timestamp}")
+        print(f"Latest timestamp: {latest_timestamp}")
 
 test_recommend()

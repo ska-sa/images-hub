@@ -9,6 +9,12 @@ import { LinkService } from '../../../../services/link.service';
 import { UserService } from '../../../../services/user.service';
 import { RequestService } from '../../../../services/request.service';
 import { RequestDetailsComponent } from '../../../../modules/guest/components/request-details/request-details.component';
+import { ImageService } from 'src/app/services/image.service';
+
+interface S3Image {
+  id: number;
+  url: string;
+}
 
 @Component({
   selector: 'app-image-card',
@@ -20,19 +26,37 @@ export class ImageCardComponent implements OnInit {
   @Input() image: Image | any = null;
   blobUrl: string = ""; // For displaying the image
   filename: string = "";
+  url: string = "";
+  highResUrl: string = "";
   isAdministrator: boolean = false;
 
-  constructor(private dialog: MatDialog, private linkService: LinkService, private userService: UserService, public requestService: RequestService) {
+  constructor(private dialog: MatDialog, private linkService: LinkService, private userService: UserService, public requestService: RequestService, public imageService: ImageService) {
 
   }
 
-  ngOnInit(): void {
-    this.createBlobUrl(`${environment.host}/images/${this.image?.low_res_img_fname}`);
-    this.filename = this.image.low_res_img_fname.substring(8);
+  async ngOnInit(): Promise<void> {
+
     const user = this.userService.getSignedInUser();
     if(user && user.type == 1){
       this.isAdministrator = true;
     }
+    //console.log(`User type ${this.isAdministrator} ${user?.type}`)
+
+    const lowResResponse = await this.imageService.getImageUrl(this.image.low_res_image_filename, 'low').toPromise();
+    const highResResponse = await this.imageService.getImageUrl(this.image.high_res_image_filename, 'high').toPromise();
+    //this.createBlobUrl(lowResResponse?.url ?? "");
+  
+    this.filename = this.image.high_res_image_filename;
+    this.url = highResResponse?.url ?? '';
+    this.highResUrl = this.url;
+    if (! this.isAdministrator) {
+      this.filename = this.image.low_res_image_filename;
+      this.url = lowResResponse?.url ?? '';
+    }
+
+    //console.log(this.filename);
+    //console.log(lowResResponse?.url);
+    
   }
 
   async createBlobUrl(url: string) {
@@ -79,14 +103,10 @@ export class ImageCardComponent implements OnInit {
 
   async openImageModal(): Promise<void> {
     try {
-      const response = await fetch(`${environment.host}/images/${this.image.high_res_img_fname}`);
-      const blob = await response.blob();
-      const url = URL.createObjectURL(blob);
-
       this.dialog.open(ImageDetailsComponent, {
         width: 'auto',
         maxWidth: '100vw',  
-        data: { imageUrl: url, filename: this.image.low_res_img_fname.substring(8) }
+        data: { imageUrl: this.url, filename: this.image.low_res_image_filename }
       });
     } catch (error) {
       console.error('Error fetching image:', error);
@@ -106,13 +126,14 @@ export class ImageCardComponent implements OnInit {
   }
 
   async openModel(): Promise<void> {
-    if(this.isAdministrator ) {
+    if(this.isAdministrator) {
       this.openImageModal();
     } else {
       this.requestService.getRequests().subscribe({
         next: (reqs) => { 
           const requests: Request[] = reqs.filter(req => req.user_id == this.userService.getSignedInUser()?.id && req.image_id == this.image?.id  && req?.status == 1 );
           if (requests.length > 0) {
+            this.url = this.highResUrl;
             this.openImageModal();
           } else {
             this.openRequestModel();

@@ -12,6 +12,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class GridViewComponent {
   imagesList: Image[] = [];
   filteredImagesList: Image[] = [];
+  isAdministrator: boolean = false;
 
   isLoading: boolean = true;
 
@@ -28,13 +29,20 @@ export class GridViewComponent {
     this.userService.filterSubject.subscribe(filter => {
       this.search(filter);
     });
+
+    const user = this.userService.getSignedInUser();
+    if(user && user.type == 1){
+      this.isAdministrator = true;
+    } else {
+      this.isAdministrator = false;
+    }
   }
 
   search(filename: string): void {
     this.filteredImagesList = [];
     if (filename != "") {
       this.imagesList.forEach(image => {
-        if (image.low_res_img_fname.substring(8).toLowerCase().includes(filename.toLowerCase()))
+        if (image.low_res_image_filename.toLowerCase().includes(filename.toLowerCase()))
           this.filteredImagesList.push(image);
       });
     } else {
@@ -76,15 +84,28 @@ export class GridViewComponent {
     event.preventDefault();
     this.isDragActive = false;
     this.files = event.dataTransfer?.files ? Array.from(event.dataTransfer.files) : [];
-    this.uploadFilesToDropbox(this.files);
+    this.uploadFilesToS3(this.files);
   }
 
-  uploadFilesToDropbox(files: File[]): void {
-    
+  uploadFilesToS3(files: File[]): void {
+    if (files.length) {
+      const formData = new FormData();
+      files.forEach(file => formData.append('file', file)); // Ensure the key is 'file'
+  
+      this.imageService.uploadImages(formData).subscribe({
+        next: (response) => {
+          //console.log('Upload Success:', response);
+          this.loadData(); // Optionally reload data or handle the response
+        },
+        error: (error) => {
+          console.error('Upload Error:', error);
+        }
+      });
+    }
   }
-
+  
   onFileSelected(event: any): void {
     const files = Array.from(event.target.files) as File[];
-    this.uploadFilesToDropbox(files);
+    this.uploadFilesToS3(files);
   }
 }
