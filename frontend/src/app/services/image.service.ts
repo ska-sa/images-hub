@@ -4,6 +4,11 @@ import { Image } from '../interfaces/image';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
+interface S3Image {
+  id: number;
+  url: string;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -31,4 +36,21 @@ export class ImageService {
       headers: this.getAuthHeader()
     });
   }
+
+  getImageUrl(filename: string, resolution: 'low' | 'high'): Observable<S3Image> {
+    const url = `${environment.host}/images/${filename}?resolution=${resolution}`;
+    return this.http.get<S3Image>(url, {
+      headers: this.getAuthHeader()
+    });
+  }
+
+  uploadImages(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}`, formData, { // Ensure the correct endpoint
+      headers: new HttpHeaders({
+        'Authorization': `Bearer ${ environment.apiKey}`
+      }), // You may not need to set Content-Type here
+      reportProgress: true,
+      observe: 'events'
+    });
+  }  
 }

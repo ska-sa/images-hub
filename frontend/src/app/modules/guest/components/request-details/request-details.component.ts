@@ -56,7 +56,7 @@ export class RequestDetailsComponent {
         created_at: ''
       }
       this.requestService.addRequest(req).subscribe({
-        next: res => { alert(`You have succesfully submitted a request for an image ${this.data.image.high_res_img_fname.substring(8)}, please wait for approval`); },
+        next: res => { alert(`You have succesfully submitted a request for an image ${this.data.image.high_res_image_filename}, please wait for approval`); },
         error: err => { console.log(err) }
       })
     }
