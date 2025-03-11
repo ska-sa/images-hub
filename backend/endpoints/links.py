@@ -85,7 +85,7 @@ def download_image(key: str) -> tuple:
             if images_list:
                 image = images_list[0]
                 img = Image(*image)
-                filename = img.high_res_img_fname
+                filename = img.high_res_image_filename
                 lnk.limit = lnk.limit - 1
                 if db.update(table_name, {'limit': lnk.limit},{'id': lnk.id}):
                     return send_from_directory(SERVER_DIRECTORY, filename, as_attachment=True)

@@ -25,10 +25,10 @@ def test_post_image() -> None:
 
         assert response.status_code == 200
         assert isinstance(image_dict, dict)
-        assert "low_res_img_fname" in image_dict.keys()
-        assert image_fname in image_dict["low_res_img_fname"]
-        assert "high_res_img_fname" in image_dict.keys()
-        assert image_fname in image_dict["high_res_img_fname"]   
+        assert "low_res_image_filename" in image_dict.keys()
+        assert image_fname in image_dict["low_res_image_filename"]
+        assert "high_res_image_filename" in image_dict.keys()
+        assert image_fname in image_dict["high_res_image_filename"]   
 
 def test_get_images() -> None:
     """This function tests the functionality of the GET images endpoint."""
@@ -42,16 +42,16 @@ def test_get_images() -> None:
         assert isinstance(images_list, list)
         for image_dict in images_list:
             assert "id" in image_dict.keys()
-            assert "low_res_img_fname" in image_dict.keys()
-            assert "high_res_img_fname" in image_dict.keys()
+            assert "low_res_image_filename" in image_dict.keys()
+            assert "high_res_image_filename" in image_dict.keys()
             assert "metadata" in image_dict.keys()
 
 def test_put_image() -> None:
     """This function tests the functionality of the PUT image endpoint"""
     image_data = {
         "id": 1,
-        "low_res_img_fname": "test_low_img_fname_updated",
-        "high_res_img_fname": "test_high_img_fname_updated",
+        "low_res_image_filename": "test_low_image_filename_updated",
+        "high_res_image_filename": "test_high_image_filename_updated",
         "metadata": "{}"
     }
 
@@ -65,10 +65,10 @@ def test_put_image() -> None:
         assert "Image updated successfully!" in image_dict["message"]
         assert "id" in image_dict.keys()
         assert image_data["id"] == image_dict["id"]
-        assert "low_res_img_fname" in image_dict.keys()
-        assert image_data["low_res_img_fname"] == image_dict["low_res_img_fname"]
-        assert "high_res_img_fname" in image_dict.keys()
-        assert image_data["high_res_img_fname"] == image_dict["high_res_img_fname"]
+        assert "low_res_image_filename" in image_dict.keys()
+        assert image_data["low_res_image_filename"] == image_dict["low_res_image_filename"]
+        assert "high_res_image_filename" in image_dict.keys()
+        assert image_data["high_res_image_filename"] == image_dict["high_res_image_filename"]
         assert "metadata" in image_dict.keys()
         assert image_data["metadata"] == image_dict["metadata"]
 
@@ -76,8 +76,8 @@ def test_delete_image() -> None:
     """This function tests the functionality of the DELETE image endpoint"""
     image_data = {
         "id": 1,
-        "low_res_img_fname": "test_low_img_fname",
-        "high_res_img_fname": "test_high_img_fname",
+        "low_res_image_filename": "test_low_image_filename",
+        "high_res_image_filename": "test_high_image_filename",
         "metadata": "{}"
     }
 
@@ -91,10 +91,10 @@ def test_delete_image() -> None:
         assert "Image deleted successfully!" in image_dict["message"]
         assert "id" in image_dict.keys()
         assert image_data["id"] == image_dict["id"]
-        assert "low_res_img_fname" in image_dict.keys()
-        assert image_data["low_res_img_fname"] == image_dict["low_res_img_fname"]
-        assert "high_res_img_fname" in image_dict.keys()
-        assert image_data["high_res_img_fname"] == image_dict["high_res_img_fname"]
+        assert "low_res_image_filename" in image_dict.keys()
+        assert image_data["low_res_image_filename"] == image_dict["low_res_image_filename"]
+        assert "high_res_image_filename" in image_dict.keys()
+        assert image_data["high_res_image_filename"] == image_dict["high_res_image_filename"]
         assert "metadata" in image_dict.keys()
         assert image_data["metadata"] == image_dict["metadata"]
 
