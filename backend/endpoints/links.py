@@ -9,7 +9,7 @@ from endpoints.images import generate_presigned_url
 
 def get_links() -> tuple:
     """
-    Description: Handling the GET /api/v2/links endpoint.
+    Description: Handling the GET /api/v1/links endpoint.
     Input: Query parameters ('min_id', 'max_id', or 'limit'), or nothing.
     Output: JSON of list of Link objects or 'message' key describing reason for process failure.
     """
@@ -41,7 +41,7 @@ def get_links() -> tuple:
 
 def get_link(id: int) -> tuple:
     """
-    Description: Handling the GET /api/v2/links<int:id> endpoint.
+    Description: Handling the GET /api/v1/links<int:id> endpoint.
     Input: Parameter id.
     Output: JSON of Link objects or 'message' key describing reason for process failure.
     """
@@ -65,7 +65,7 @@ def get_link(id: int) -> tuple:
 
 def download_image(key: str) -> tuple:
     """
-    Description: Handling the GET /api/v2/links<string:key> endpoint.
+    Description: Handling the GET /api/v1/links<string:key> endpoint.
     Input: Parameter key.
     Output: Download image or JSON or 'message' key describing reason for process failure.
     """
@@ -106,7 +106,7 @@ def download_image(key: str) -> tuple:
 
 def post_link() -> tuple:
     """
-    Description: Handling the POST /api/v2/links endpoint.
+    Description: Handling the POST /api/v1/links endpoint.
     Input: JSON with ('id', 'image_id', 'key', 'limit').
     Output: JSON of Link object with 'message' key indicating success or failure.
     """
@@ -135,7 +135,7 @@ def post_link() -> tuple:
     
 def put_link() -> tuple:
     """
-    Description: Handling the PUT /api/v2/links endpoint.
+    Description: Handling the PUT /api/v1/links endpoint.
     Input: JSON with ('id', 'image_id', 'key', 'limit', 'created_at').
     Output: JSON with 'message' key indicating success or failure.
     """
@@ -168,7 +168,7 @@ def put_link() -> tuple:
     
 def delete_link() -> tuple:
     """
-    Description: Handling the DELETE /api/v2/links endpoint.
+    Description: Handling the DELETE /api/v1/links endpoint.
     Input: JSON with ('id', 'image_id', 'key', 'limit').
     Output: JSON of Link object with 'message' key indicating success or failure.
     """

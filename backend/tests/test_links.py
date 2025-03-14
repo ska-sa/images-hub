@@ -5,7 +5,7 @@ from dotenv import load_dotenv
 from main import app
 from classes import Database
 
-URL = "http://localhost:5000/api/v2/links"
+URL = "http://localhost:5000/api/v1/links"
 load_dotenv()
 headers = {
     "Content-Type": "application/json",

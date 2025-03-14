@@ -55,7 +55,7 @@ class Back_End:
 
 backend = Back_End()
 
-@app.route('/api/v2/emails', methods=['POST'])
+@app.route('/api/v1/emails', methods=['POST'])
 def send_email_route():
     validation_response = backend.validate_api_key()
     if validation_response:
@@ -63,49 +63,49 @@ def send_email_route():
     return send_email()
 
 
-@app.route('/api/v2/users', methods=['GET'])
+@app.route('/api/v1/users', methods=['GET'])
 def get_users_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return get_users()
 
-@app.route('/api/v2/users/<int:id>', methods=['GET'])
+@app.route('/api/v1/users/<int:id>', methods=['GET'])
 def get_user_route(id: int):
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return get_user(id)
 
-@app.route('/api/v2/users', methods=['POST'])
+@app.route('/api/v1/users', methods=['POST'])
 def post_user_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return post_user()
 
-@app.route('/api/v2/users', methods=['PUT'])
+@app.route('/api/v1/users', methods=['PUT'])
 def put_user_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return put_user()
 
-@app.route('/api/v2/users', methods=['DELETE'])
+@app.route('/api/v1/users', methods=['DELETE'])
 def delete_user_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return delete_user()
 
-@app.route('/api/v2/users/auth', methods=['POST'])
+@app.route('/api/v1/users/auth', methods=['POST'])
 def auth_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return auth()
 
-@app.route('/api/v2/users/users/google_auth', methods=['POST'])
+@app.route('/api/v1/users/users/google_auth', methods=['POST'])
 def goofle_auth_route():
     validation_response = backend.validate_api_key()
     if validation_response:
@@ -113,21 +113,21 @@ def goofle_auth_route():
     return google_auth()
 
 
-@app.route('/api/v2/images', methods=['GET'])
+@app.route('/api/v1/images', methods=['GET'])
 def get_images_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return get_images()
 
-@app.route('/api/v2/images/<int:id>', methods=['GET'])
+@app.route('/api/v1/images/<int:id>', methods=['GET'])
 def get_image_route(id: int):
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return get_image(id)
 
-@app.route('/api/v2/images/<string:filename>', methods=['GET'])
+@app.route('/api/v1/images/<string:filename>', methods=['GET'])
 def get_s3_image_url_route(filename: str):
     validation_response = backend.validate_api_key()
     if validation_response:
@@ -135,7 +135,7 @@ def get_s3_image_url_route(filename: str):
     return get_image_s3_url(filename)
 
 """
-@app.route('/api/v2/images', methods=['POST'])
+@app.route('/api/v1/images', methods=['POST'])
 def post_images_route():
     validation_response = backend.validate_api_key()
     if validation_response:
@@ -143,21 +143,21 @@ def post_images_route():
     return post_image()
 """
 
-@app.route('/api/v2/images', methods=['POST'])
+@app.route('/api/v1/images', methods=['POST'])
 def upload_image_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return upload_image()
 
-@app.route('/api/v2/images', methods=['PUT'])
+@app.route('/api/v1/images', methods=['PUT'])
 def put_image_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return put_image()
 
-@app.route('/api/v2/images', methods=['DELETE'])
+@app.route('/api/v1/images', methods=['DELETE'])
 def delete_image_route():
     validation_response = backend.validate_api_key()
     if validation_response:
@@ -165,35 +165,35 @@ def delete_image_route():
     return delete_image()
 
 
-@app.route('/api/v2/requests', methods=['GET'])
+@app.route('/api/v1/requests', methods=['GET'])
 def get_requests_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return get_requests()
 
-@app.route('/api/v2/requests/<int:id>', methods=['GET'])
+@app.route('/api/v1/requests/<int:id>', methods=['GET'])
 def get_request_route(id: int):
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return get_request(id)
 
-@app.route('/api/v2/requests', methods=['POST'])
+@app.route('/api/v1/requests', methods=['POST'])
 def post_request_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return post_request()
 
-@app.route('/api/v2/requests', methods=['PUT'])
+@app.route('/api/v1/requests', methods=['PUT'])
 def put_request_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return put_request()
 
-@app.route('/api/v2/requests', methods=['DELETE'])
+@app.route('/api/v1/requests', methods=['DELETE'])
 def delete_request_route():
     validation_response = backend.validate_api_key()
     if validation_response:
@@ -201,39 +201,39 @@ def delete_request_route():
     return delete_request()
 
 
-@app.route('/api/v2/links', methods=['GET'])
+@app.route('/api/v1/links', methods=['GET'])
 def get_links_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return get_links()
 
-@app.route('/api/v2/links/<int:id>', methods=['GET'])
+@app.route('/api/v1/links/<int:id>', methods=['GET'])
 def get_link_route(id: int):
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return get_link(id)
 
-@app.route('/api/v2/links/<string:key>', methods=['GET'])
+@app.route('/api/v1/links/<string:key>', methods=['GET'])
 def download_link_route(key: str):
     return download_image(key)
 
-@app.route('/api/v2/links', methods=['POST'])
+@app.route('/api/v1/links', methods=['POST'])
 def post_link_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return post_link()
 
-@app.route('/api/v2/links', methods=['PUT'])
+@app.route('/api/v1/links', methods=['PUT'])
 def put_link_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
     return put_link()
 
-@app.route('/api/v2/links', methods=['DELETE'])
+@app.route('/api/v1/links', methods=['DELETE'])
 def delete_link_route():
     validation_response = backend.validate_api_key()
     if validation_response:

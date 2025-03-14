@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 
 def get_users() -> tuple:
     """
-    Description: Handling the GET /api/v2/users endpoint.
+    Description: Handling the GET /api/v1/users endpoint.
     Input: Query parameters ('min_id', 'max_id', or 'limit'), or nothing.
     Output: JSON of list of User objects or 'message' key describing reason for process failure.
     """
@@ -40,7 +40,7 @@ def get_users() -> tuple:
 
 def get_user(id: int) -> tuple:
     """
-    Description: Handling the GET /api/v2/users/<int:id> endpoint.
+    Description: Handling the GET /api/v1/users/<int:id> endpoint.
     Input: Parameter id .
     Output: JSON of User object or 'message' key describing reason for process failure.
     """
@@ -64,7 +64,7 @@ def get_user(id: int) -> tuple:
 
 def post_user() -> tuple:
     """
-    Description: Handling the POST /api/v2/users endpoint.
+    Description: Handling the POST /api/v1/users endpoint.
     Input: JSON with 'email_address' key.
     Output: JSON of User object or 'message' key describing reason for process failure.
     """
@@ -95,7 +95,7 @@ def post_user() -> tuple:
      
 def auth() -> tuple:
     """
-    Description: Handling the POST /api/v2/users endpoint.
+    Description: Handling the POST /api/v1/users endpoint.
     Input: JSON with 'email_address' key.
     Output: JSON of User object or 'message' key describing reason for process failure.
     """
@@ -127,7 +127,7 @@ def auth() -> tuple:
 
 def put_user() -> str:
     """
-    Description: Handling the PUT /api/v2/users endpoint.
+    Description: Handling the PUT /api/v1/users endpoint.
     Input: JSON with ('id', 'email_address', 'type').
     Output: JSON of User object with 'message' key indicating success or failure.
     """
@@ -158,7 +158,7 @@ def put_user() -> str:
 
 def delete_user() -> str:
     """
-    Description: Handling the DELETE /api/v2/users endpoint.
+    Description: Handling the DELETE /api/v1/users endpoint.
     Input: JSON with ('id', 'email_address', 'type').
     Output: JSON of User object with 'message' key indicating success or failure.
     """
@@ -196,7 +196,7 @@ def delete_user() -> str:
 
 def google_auth() -> tuple:
     """
-    Description: Handling the POST /api/v2/users/google_auth endpoint.
+    Description: Handling the POST /api/v1/users/google_auth endpoint.
     Input: JSON with 'step' key.
     Output: JSON of User object or 'message' key describing reason for process failure.
     """

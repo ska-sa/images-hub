@@ -9,7 +9,7 @@ app_password = os.getenv("SENDER_EMAIL_ADDRESS_APP_PASSWORD")
 
 def send_email():
     """
-    Description: Handling the POST /api/v2/emails endpoint.
+    Description: Handling the POST /api/v1/emails endpoint.
     Input: JSON with 'receiver_email_address', 'subject' and 'body' key.
     Output: JSON with 'message' key describing status of the process.
     """

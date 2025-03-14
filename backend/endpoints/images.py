@@ -81,7 +81,7 @@ def recommend(images, num_of_images: int = 3) -> list[tuple[int, str, str]]:
 
 def get_images() -> tuple:
     """
-    Description: Handling the GET /api/v2/images endpoint.
+    Description: Handling the GET /api/v1/images endpoint.
     Input: Query parameters ('min_id', 'max_id', 'limit', or 'model'), or nothing.
     Output: JSON of list of Image objects or 'message' key describing reason for process failure.
     """
@@ -119,7 +119,7 @@ def get_images() -> tuple:
 
 def get_image(id) -> tuple:
     """
-    Description: Handling the GET /api/v2/images<int:id> endpoint.
+    Description: Handling the GET /api/v1/images<int:id> endpoint.
     Input: Parameter id.
     Output: JSON of Image object or 'message' key describing reason for process failure.
     """
@@ -143,7 +143,7 @@ def get_image(id) -> tuple:
 
 def get_image_s3_url(filename: str) -> tuple:
     """
-    Description: Handling the GET /api/v2/images/<string:filename> endpoint.
+    Description: Handling the GET /api/v1/images/<string:filename> endpoint.
     Input: Parameter filename and resolution.
     Output: JSON containing Image id and its S3 download url.
     """
@@ -172,7 +172,7 @@ def get_image_s3_url(filename: str) -> tuple:
 """
 def serve_image(filename) -> tuple:
     "
-    Description: Handling the GET /api/v2/images/<string:filename> endpoint.
+    Description: Handling the GET /api/v1/images/<string:filename> endpoint.
     Input: Parameter filename.
     Output: Serves the image file directly.
     "
@@ -188,7 +188,7 @@ def serve_image(filename) -> tuple:
 
 def post_image() -> tuple:
     "
-    Description: Handling the POST /api/v2/images endpoint.
+    Description: Handling the POST /api/v1/images endpoint.
     Input: JSON with 'img_path'.
     Output: JSON with 'message' key indicating success or failure.
     "
@@ -295,7 +295,7 @@ def upload_image():
 
 def put_image() -> str:
     """
-    Description: Handling the PUT /api/v2/images endpoint.
+    Description: Handling the PUT /api/v1/images endpoint.
     Input: JSON with ('id', 'low_res_image_filename', 'high_res_image_filename', 'metadata', 'created_at').
     Output: JSON of Image object with 'message' key indicating success or failure.
     """
@@ -328,7 +328,7 @@ def put_image() -> str:
 
 def delete_image() -> str:
     """
-    Description: Handling the DELETE /api/v2/images endpoint.
+    Description: Handling the DELETE /api/v1/images endpoint.
     Input: JSON with ('id', 'low_res_image_filename', 'high_res_image_filename', 'metadata', 'created_at').
     Output: JSON of Image object with 'message' key indicating success or failure.
     """

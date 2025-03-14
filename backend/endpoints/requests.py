@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 
 def get_requests() -> tuple:
     """
-    Description: Handling the GET /api/v2/requests endpoint.
+    Description: Handling the GET /api/v1/requests endpoint.
     Input: Query parameters ('min_id', 'max_id', or 'limit'), or nothing.
     Output: JSON of list of Request objects or 'message' key describing reason for process failure.
     """
@@ -41,7 +41,7 @@ def get_requests() -> tuple:
 
 def get_request(id: int) -> tuple:
     """
-    Description: Handling the GET /api/v2/requests<int:id> endpoint.
+    Description: Handling the GET /api/v1/requests<int:id> endpoint.
     Input: Parameter id.
     Output: JSON of Request objects or 'message' key describing reason for process failure.
     """
@@ -65,7 +65,7 @@ def get_request(id: int) -> tuple:
 
 def post_request() -> tuple:
     """
-    Description: Handling the POST /api/v2/requests endpoint.
+    Description: Handling the POST /api/v1/requests endpoint.
     Input: JSON with ('id', 'user_id', 'image_id', 'reason', 'status').
     Output: JSON with 'message' key indicating success or failure.
     """
@@ -96,7 +96,7 @@ def post_request() -> tuple:
     
 def put_request() -> tuple:
     """
-    Description: Handling the PUT /api/v2/requests endpoint.
+    Description: Handling the PUT /api/v1/requests endpoint.
     Input: JSON with ('id', 'user_id', 'img_id', 'reason', 'status', 'created_at').
     Output: JSON with 'message' key indicating success or failure.
     """
@@ -129,7 +129,7 @@ def put_request() -> tuple:
     
 def delete_request() -> tuple:
     """
-    Description: Handling the DELETE /api/v2/requests endpoint.
+    Description: Handling the DELETE /api/v1/requests endpoint.
     Input: JSON with ('id', 'user_id', 'image_id', 'reason', 'status', 'created_at').
     Output: JSON of Request object with 'message' key indicating success or failure.
     """

@@ -3,7 +3,7 @@ import os
 from dotenv import load_dotenv
 from main import app
 
-URL = "http://localhost:5000/api/v2/emails"
+URL = "http://localhost:5000/api/v1/emails"
 load_dotenv()
 headers = {
     "Content-Type": "application/json",
