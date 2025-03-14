@@ -55,8 +55,14 @@ def compute_image_scores(images: list[Image], requests: list[Request], links: li
 def plot_image_scores(score_history: list[tuple[datetime, float]], output_path: str) -> None:
     fig, ax = plt.subplots(figsize=(12, 6))
 
-    timestamps, scores = zip(*score_history)
-    ax.plot(timestamps, scores, marker='o', label="Image Scores Over Time")
+    if score_history:
+        timestamps, scores = zip(*score_history)
+        ax.plot(timestamps, scores, marker='o', label="Image Scores Over Time")
+    else:
+        ax.set_title("No Data Available")
+        ax.set_xlabel("Datetime")
+        ax.set_ylabel("Score")
+        ax.text(0.5, 0.5, "No scores to display", horizontalalignment='center', verticalalignment='center', transform=ax.transAxes)
 
     ax.set_xlabel("Datetime")
     ax.set_ylabel("Score")
@@ -67,13 +73,19 @@ def plot_image_scores(score_history: list[tuple[datetime, float]], output_path: 
 def test_recommend(images: list[Image], requests: list[Request], links: list[Link]):
     # Test with different datasets
     test_cases = [
-        (0, 0, 0, None),  # Test case 1: 0 images, 0 requests, 0 links, expected_image
+        (0, 0, 0, None),  # Test case 1: 0 images, 0 requests, 0 links, expected_image None
+        (1, 0, 0, None),  # Test case 1: 0 images, 0 requests, 0 links, expected_image image.id = 1
     ]
     
     for i, test_case in enumerate(test_cases):
         num_images, num_requests, num_links, expected_highly_recommended_image = test_case
         sorted_images, score_history = compute_image_scores(images[:num_images], requests[:num_requests], links[:num_links])
+        
+        # Determine the highly recommended image
+        highly_recommended_image = sorted_images[0].id if sorted_images else None
+        
         plot_image_scores(score_history, f"outputs/test_{i}.png")
+        print(f"Test {i}: Highly Recommended Image: image.id={highly_recommended_image}")
 
 def main() -> None:
     images = [
@@ -103,12 +115,5 @@ def main() -> None:
 
     test_recommend(images, requests, links)
 
-    #sorted_images, score_history = compute_image_scores(images, requests, links)
-    #for image in sorted_images:
-    #    print(image.id, end="\t")
-
-    #plot_image_scores(score_history, "outputs/all_images_scores.png")
-
 if __name__ == "__main__":
     main()
-    print()
