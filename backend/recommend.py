@@ -6,140 +6,77 @@ from classes.image import Image
 from classes.request import Request
 from classes.link import Link
 
-def recommend(images: list[Image], requests: list[Request], links: list[Link]) -> list[tuple[Image, list[tuple[datetime, float]]]]:
-    image_timestamp_scores_score_list: list[tuple[Image, list[tuple[datetime, float]], float]] = []
-
-    for image in images:
-        timestamp_score_list: list[tuple[datetime, float]] = []
-        score: float = random.randint(0, 10) / 100.0
-        latest_datetime = None
-        for request in requests:
-            if latest_datetime is None: # Check if datetime has been assigned to latest_datetime
-                latest_datetime = request.created_at
-            elif latest_datetime < request.created_at:
-                 latest_datetime = request.created_at # Updating latest datetime to latest created_at value
-
-            if request.img_id == image.id:
-                now_datetime = datetime.now() + timedelta(hours=2)
-                delta_datetime: float = float(now_datetime.timestamp()) / float(request.created_at.timestamp())
-                score += 0.2 * math.exp(0 - delta_datetime)
-                timestamp_score_list.append((request.created_at, score))
-
-        for link in links:
-            if latest_datetime is None: # Check if datetime has been assigned to latest_datetime
-                latest_datetime = link.created_at
-            elif latest_datetime < link.created_at:
-                 latest_datetime = link.created_at # Updating latest datetime to latest created_at value
-
-            if link.image_id == image.id:
-                now_datetime = datetime.now() + timedelta(hours=2)
-                delta_datetime: float = float(now_datetime.timestamp()) / float(link.created_at.timestamp())
-                score += 0.2 * 3 * math.exp(0 - delta_datetime)
-                timestamp_score_list.append((link.created_at, score))
-
-        if timestamp_score_list == []: # If list is empty append score of ZERO
-            timestamp_score_list.append((latest_datetime, random.random() * 0.05))
-        
-        image_timestamp_scores_score_list.append((image, timestamp_score_list, score))
-
-    image_timestamp_scores_score_list.sort(key=lambda x: x[2], reverse=True)
-    return [(image, timestamp_scores_list) for image, timestamp_scores_list, _ in image_timestamp_scores_score_list]
-
-def plot_image_scores(sorted_images: list[tuple[Image, list[tuple[datetime, float]]]]) -> None:
-    fig, ax = plt.subplots(figsize=(12, 6))
-
-    for image, timestamp_score_list in sorted_images:
-        if timestamp_score_list:
-            timestamps, scores = zip(*timestamp_score_list)
-            ax.plot(timestamps, scores, marker='o', label=f"Image {image.id} ({scores[-1]:.2f})")
-
-    ax.set_xlabel("Datetime")
-    ax.set_ylabel("Score")
-    ax.set_title("Image Scores")
-    ax.legend()
-    plt.savefig("outputs/images_trend")
-
-def test_recommend():
-    images: list[Image] = [
-        Image(1, "high_res_1.jpg", "low_res_1.jpg", "metadata_1", datetime(2024, 10, 21, 10, 0, 0)),
-        Image(2, "high_res_2.jpg", "low_res_2.jpg", "metadata_2", datetime(2024, 10, 21, 10, 11, 0)),
-        Image(3, "high_res_3.jpg", "low_res_3.jpg", "metadata_3", datetime(2024, 10, 30, 4, 8, 3)),
-        Image(4, "high_res_4.jpg", "low_res_4.jpg", "metadata_4", datetime(2024, 10, 30, 12, 30, 0)),
-        Image(5, "high_res_5.jpg", "low_res_5.jpg", "metadata_5", datetime(2024, 11, 15, 10, 5, 0)),
-        Image(6, "high_res_6.jpg", "low_res_6.jpg", "metadata_6", datetime(2024, 12, 5, 3, 45, 0))
-    ]
-    requests: list[Request] = [
-        Request(1, 1, 1, "reason_1 for image_1", 1, datetime(2024, 10, 21, 17, 37, 0)),
-        Request(2, 2, 1, "reason_2 for imgage_1", 1, datetime(2024, 10, 21, 19, 55, 0)),
-        Request(3, 3, 3, "reason_3 for image_3", 1, datetime(2024, 10, 30, 15, 19, 36)),
-        Request(4, 4, 2, "reason_4 for image_2", 1, datetime(2024, 10, 25, 17, 31, 55)),
-        Request(5, 5, 2, "reason_5 for image_2", 1, datetime(2024, 10, 28, 3, 22, 8)),
-        Request(6, 6, 2, "reason_6 for image_2", 1, datetime(2024, 10, 28, 10, 19, 12))
-    ]
-    links: list[Link] = [
-        Link(1, 1, "key_1 for image_1", 5, datetime(2024, 10, 21, 22, 17, 0)),
-        Link(2, 3, "key_2 for image_3", 5, datetime(2024, 11, 3, 6, 41, 0)),
-        Link(3, 1, "key_3 for image_1", 4, datetime(2024, 10, 22, 18, 33, 8)),
-        Link(4, 1, "key_4 for image_1", 3, datetime(2024, 10, 29, 21, 44, 20)),
-        Link(5, 1, "key_5 for image_1", 2, datetime(2024, 10, 30, 11, 19, 5)),
-        Link(6, 2, "key_6 for image_2", 5, datetime(2024, 11, 3, 17, 4, 5)),
-    ]
-    
-    while images or requests or links:
-        if images:
-            oldest_image = images.pop(0)
-            print(f"Popped oldest image: {oldest_image.id}, {oldest_image.created_at}")
-        elif requests:
-            oldest_request = requests.pop(0)
-            print(f"Popped oldest request: {oldest_request.id}, {oldest_request.created_at}")
-        elif links:
-            oldest_link = links.pop(0)
-            print(f"Popped oldest link: {oldest_link.id}, {oldest_link.created_at}")
-
-        sorted_images = recommend(images, requests, links)
-        #latest_timestamp = max([image.created_at for image in sorted_images] + [request.created_at for request in requests] + [link.created_at for link in links])
-        plot_image_scores(sorted_images)
-        #print(f"Latest timestamp: {latest_timestamp}")
-
-def sort_images(images: list[Image], requests: list[Request], links: list[Link], request_weight: float = 0.5, link_weight: float = 0.75) -> list[Image]:
+def compute_image_scores(images: list[Image], requests: list[Request], links: list[Link], request_weight: float = 0.5, link_weight: float = 0.75) -> tuple[list[Image], list[tuple[datetime, float]]]:
     now = datetime.now()
     image_scores = []
+    score_history = []
 
     # Calculate scores for each image
     for image in images:
         score = 0.0
+        timestamps = []
 
         # Calculate request scores
         for request in requests:
-            if request.img_id == image.id: 
+            if request.img_id == image.id:
                 request_score = math.pow(1.05, (0 - (now - request.created_at).total_seconds() / (60 * 60 * 24)))
                 score += request_weight * request_score
-        
+                timestamps.append((request.created_at, score))
+
         # Calculate link scores
         for link in links:
             if link.image_id == image.id:
                 link_score = math.pow(1.05, (0 - (now - link.created_at).total_seconds() / (60 * 60 * 24)))
                 score += link_weight * link_score
+                timestamps.append((link.created_at, score))
 
         # Apply randomness to the score
         if score == 0.0:
             score = float(random.randint(0, 15)) / 100000.0
         else:
-            score *= float(100.0 - random.randint(-2, 2)) / 100.0
+            score *= float(100.0 - random.randint(-10, 10)) / 100.0
+        
         image_scores.append((image, score))
+
+        # Add timestamps for the last 30 days
+        for days_ago in range(30):
+            past_date = now - timedelta(days=days_ago)
+            if timestamps:
+                # Use the latest score for the past date
+                latest_score = max([s[1] for s in timestamps if s[0] <= past_date], default=0)
+                score_history.append((past_date, latest_score))
 
     # Sort images based on scores in descending order
     sorted_images = sorted(image_scores, key=lambda x: x[1], reverse=True)
 
     # Extract sorted images from the tuples
-    return [img for img, score in sorted_images]
+    return [img for img, score in sorted_images], score_history
 
-# Datetime conversion to days
-def seconds_to_days(seconds: float) -> float:
-    return seconds / (60 * 60 * 24)
+def plot_image_scores(score_history: list[tuple[datetime, float]], output_path: str) -> None:
+    fig, ax = plt.subplots(figsize=(12, 6))
+
+    timestamps, scores = zip(*score_history)
+    ax.plot(timestamps, scores, marker='o', label="Image Scores Over Time")
+
+    ax.set_xlabel("Datetime")
+    ax.set_ylabel("Score")
+    ax.set_title("Image Scores Over Time")
+    ax.legend()
+    plt.savefig(output_path)
+
+def test_recommend(images: list[Image], requests: list[Request], links: list[Link]):
+    # Test with different datasets
+    test_cases = [
+        (0, 0, 0, None),  # Test case 1: 0 images, 0 requests, 0 links, expected_image
+    ]
+    
+    for i, test_case in enumerate(test_cases):
+        num_images, num_requests, num_links, expected_highly_recommended_image = test_case
+        sorted_images, score_history = compute_image_scores(images[:num_images], requests[:num_requests], links[:num_links])
+        plot_image_scores(score_history, f"outputs/test_{i}.png")
 
 def main() -> None:
-    images: list[Image] = [
+    images = [
         Image(1, "high_res_1.jpg", "low_res_1.jpg", "metadata_1", datetime(2024, 10, 21, 10, 0, 0)),
         Image(2, "high_res_2.jpg", "low_res_2.jpg", "metadata_2", datetime(2024, 10, 21, 10, 11, 0)),
         Image(3, "high_res_3.jpg", "low_res_3.jpg", "metadata_3", datetime(2024, 10, 30, 4, 8, 3)),
@@ -147,15 +84,15 @@ def main() -> None:
         Image(5, "high_res_5.jpg", "low_res_5.jpg", "metadata_5", datetime(2024, 11, 15, 10, 5, 0)),
         Image(6, "high_res_6.jpg", "low_res_6.jpg", "metadata_6", datetime(2024, 12, 5, 3, 45, 0))
     ]
-    requests: list[Request] = [
+    requests = [
         Request(1, 1, 1, "reason_1 for image_1", 1, datetime(2024, 10, 21, 17, 37, 0)),
-        Request(2, 2, 1, "reason_2 for imgage_1", 1, datetime(2024, 10, 21, 19, 55, 0)),
+        Request(2, 2, 1, "reason_2 for image_1", 1, datetime(2024, 10, 21, 19, 55, 0)),
         Request(3, 3, 3, "reason_3 for image_3", 1, datetime(2024, 10, 30, 15, 19, 36)),
         Request(4, 4, 2, "reason_4 for image_2", 1, datetime(2024, 10, 25, 17, 31, 55)),
         Request(5, 5, 2, "reason_5 for image_2", 1, datetime(2024, 10, 28, 3, 22, 8)),
         Request(6, 6, 2, "reason_6 for image_2", 1, datetime(2024, 10, 28, 10, 19, 12))
     ]
-    links: list[Link] = [
+    links = [
         Link(1, 1, "key_1 for image_1", 5, datetime(2024, 10, 21, 22, 17, 0)),
         Link(2, 3, "key_2 for image_3", 5, datetime(2024, 11, 3, 6, 41, 0)),
         Link(3, 1, "key_3 for image_1", 4, datetime(2024, 10, 22, 18, 33, 8)),
@@ -164,10 +101,14 @@ def main() -> None:
         Link(6, 2, "key_6 for image_2", 5, datetime(2024, 11, 3, 17, 4, 5)),
     ]
 
-    sorted_images: list[Image] = list()
-    sorted_images = sort_images(images, requests, links)
-    for image in sorted_images:
-        print(image.id, end=" ")
+    test_recommend(images, requests, links)
+
+    #sorted_images, score_history = compute_image_scores(images, requests, links)
+    #for image in sorted_images:
+    #    print(image.id, end="\t")
+
+    #plot_image_scores(score_history, "outputs/all_images_scores.png")
 
 if __name__ == "__main__":
     main()
+    print()
