@@ -101,4 +101,31 @@ def test_recommend():
         plot_image_scores(sorted_images)
         #print(f"Latest timestamp: {latest_timestamp}")
 
-test_recommend()
+def main() -> None:
+    images: list[Image] = [
+        Image(1, "high_res_1.jpg", "low_res_1.jpg", "metadata_1", datetime(2024, 10, 21, 10, 0, 0)),
+        Image(2, "high_res_2.jpg", "low_res_2.jpg", "metadata_2", datetime(2024, 10, 21, 10, 11, 0)),
+        Image(3, "high_res_3.jpg", "low_res_3.jpg", "metadata_3", datetime(2024, 10, 30, 4, 8, 3)),
+        Image(4, "high_res_4.jpg", "low_res_4.jpg", "metadata_4", datetime(2024, 10, 30, 12, 30, 0)),
+        Image(5, "high_res_5.jpg", "low_res_5.jpg", "metadata_5", datetime(2024, 11, 15, 10, 5, 0)),
+        Image(6, "high_res_6.jpg", "low_res_6.jpg", "metadata_6", datetime(2024, 12, 5, 3, 45, 0))
+    ]
+    requests: list[Request] = [
+        Request(1, 1, 1, "reason_1 for image_1", 1, datetime(2024, 10, 21, 17, 37, 0)),
+        Request(2, 2, 1, "reason_2 for imgage_1", 1, datetime(2024, 10, 21, 19, 55, 0)),
+        Request(3, 3, 3, "reason_3 for image_3", 1, datetime(2024, 10, 30, 15, 19, 36)),
+        Request(4, 4, 2, "reason_4 for image_2", 1, datetime(2024, 10, 25, 17, 31, 55)),
+        Request(5, 5, 2, "reason_5 for image_2", 1, datetime(2024, 10, 28, 3, 22, 8)),
+        Request(6, 6, 2, "reason_6 for image_2", 1, datetime(2024, 10, 28, 10, 19, 12))
+    ]
+    links: list[Link] = [
+        Link(1, 1, "key_1 for image_1", 5, datetime(2024, 10, 21, 22, 17, 0)),
+        Link(2, 3, "key_2 for image_3", 5, datetime(2024, 11, 3, 6, 41, 0)),
+        Link(3, 1, "key_3 for image_1", 4, datetime(2024, 10, 22, 18, 33, 8)),
+        Link(4, 1, "key_4 for image_1", 3, datetime(2024, 10, 29, 21, 44, 20)),
+        Link(5, 1, "key_5 for image_1", 2, datetime(2024, 10, 30, 11, 19, 5)),
+        Link(6, 2, "key_6 for image_2", 5, datetime(2024, 11, 3, 17, 4, 5)),
+    ]
+    
+if __name__ == "__main__":
+    main()
