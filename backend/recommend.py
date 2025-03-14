@@ -101,6 +101,43 @@ def test_recommend():
         plot_image_scores(sorted_images)
         #print(f"Latest timestamp: {latest_timestamp}")
 
+def sort_images(images: list[Image], requests: list[Request], links: list[Link], request_weight: float = 0.5, link_weight: float = 0.75) -> list[Image]:
+    now = datetime.now()
+    image_scores = []
+
+    # Calculate scores for each image
+    for image in images:
+        score = 0.0
+
+        # Calculate request scores
+        for request in requests:
+            if request.img_id == image.id: 
+                request_score = math.pow(1.05, (0 - (now - request.created_at).total_seconds() / (60 * 60 * 24)))
+                score += request_weight * request_score
+        
+        # Calculate link scores
+        for link in links:
+            if link.image_id == image.id:
+                link_score = math.pow(1.05, (0 - (now - link.created_at).total_seconds() / (60 * 60 * 24)))
+                score += link_weight * link_score
+
+        # Apply randomness to the score
+        if score == 0.0:
+            score = float(random.randint(0, 15)) / 100000.0
+        else:
+            score *= float(100.0 - random.randint(-2, 2)) / 100.0
+        image_scores.append((image, score))
+
+    # Sort images based on scores in descending order
+    sorted_images = sorted(image_scores, key=lambda x: x[1], reverse=True)
+
+    # Extract sorted images from the tuples
+    return [img for img, score in sorted_images]
+
+# Datetime conversion to days
+def seconds_to_days(seconds: float) -> float:
+    return seconds / (60 * 60 * 24)
+
 def main() -> None:
     images: list[Image] = [
         Image(1, "high_res_1.jpg", "low_res_1.jpg", "metadata_1", datetime(2024, 10, 21, 10, 0, 0)),
@@ -126,6 +163,11 @@ def main() -> None:
         Link(5, 1, "key_5 for image_1", 2, datetime(2024, 10, 30, 11, 19, 5)),
         Link(6, 2, "key_6 for image_2", 5, datetime(2024, 11, 3, 17, 4, 5)),
     ]
-    
+
+    sorted_images: list[Image] = list()
+    sorted_images = sort_images(images, requests, links)
+    for image in sorted_images:
+        print(image.id, end=" ")
+
 if __name__ == "__main__":
     main()
