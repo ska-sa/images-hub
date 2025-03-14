@@ -8,26 +8,38 @@ The Image Hub is a web application designed to address the challenges of managin
 - Enable guest users to request access to the original high-resolution versions of the images, providing a valid reason for the request.
 - Empower SARAO administrators, such as department heads, to review and approve or disapprove these access requests based on the provided justification.
 
-## Project Structure
+## Project File Structure
 
-IMAGESHUB
-- ├── Back_End
-- │   ├── (backend files)
-- ├── Front_End
-- │   ├── (frontend files)
-- ├── .gitignore
-- ├── docker-compose.yaml
-- ├── Dockerfile
-- └── README.md
+images-hub
+- /backend
+- - /classes
+- - /databases
+- - /endpoints
+- - /outputs
+- - /tests
+- - /tmp
+- - venv (excluded)
+- /configuration
+- /design
+- /frontend
+- .dockerignore
+- .gitignore
+- docker-compose.yaml
+- Dockerfile
+- Makefile
+- README.md
 
-## Image Hub Backend
+## Backend
 
-The backend for the Image Hub application is built using Python and the Bottle framework. It provides various APIs for managing users, images, and requests.
+The backend for this application was built using Python packages Flask, Boto3, etc. This provides various Restful APIs for managing users, emails, images, requests, and links.
 
 ### API Endpoints
 
 #### User Endpoints
-- `GET /api/get-users`: Get all users.
+- `GET /api/v1/users`: Get all users.
+- `GET /api/v1/users/id=`: Get all users.
+- `GET /api/v1/users`: Get all users.
+- `GET /api/v1/users`: Get all users.
 - `POST /api/sign-in`: Sign in a user.
 
 #### Image Endpoints
