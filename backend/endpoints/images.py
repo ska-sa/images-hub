@@ -241,7 +241,7 @@ def post_image() -> tuple:
 
 """
     
-def upload_image():
+def upload_image() -> tuple:
     if 'file' not in request.files:
         return jsonify({"error": "No file part"}), 400
 
@@ -293,7 +293,7 @@ def upload_image():
     else:
         return jsonify({"message": "Image insertion failed!"}), 402
 
-def put_image() -> str:
+def put_image() -> tuple:
     """
     Description: Handling the PUT /api/v1/images endpoint.
     Input: JSON with ('id', 'low_res_image_filename', 'high_res_image_filename', 'metadata', 'created_at').
@@ -326,7 +326,7 @@ def put_image() -> str:
     except Exception as e:
             return jsonify({"message": f"An error occurred: {str(e)}"}), 500
 
-def delete_image() -> str:
+def delete_image() -> tuple:
     """
     Description: Handling the DELETE /api/v1/images endpoint.
     Input: JSON with ('id', 'low_res_image_filename', 'high_res_image_filename', 'metadata', 'created_at').
