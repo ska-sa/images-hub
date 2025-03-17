@@ -31,9 +31,12 @@ images-hub
 
 ## Backend
 
-The backend for this application was built using Python packages Flask, Boto3, etc. This provides various Restful APIs for managing users, emails, images, requests, and links.
+The backend for this application was built using Python packages Flask, Boto3, etc. And is responsible for inserting, selecting, updating and deleting data on our database and interacting with S3 bucket. This backend provides various Restful APIs for managing users, emails, images, requests, and links.
 
 ### API Endpoints
+
+#### Email Endpoints
+- `POST /api/v1/emails`: Input (json with receiver_email_address subject and body), Patamaters (none), Output (json with status message).
 
 #### User Endpoints
 - `GET /api/v1/users`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
