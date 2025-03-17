@@ -9,11 +9,11 @@ import { EmailService } from 'src/app/services/email.service';
 import { Email } from 'src/app/interfaces/email';
 
 @Component({
-  selector: 'app-request-row',
-  templateUrl: './request-row.component.html',
-  styleUrls: ['./request-row.component.css']
+  selector: 'app-row',
+  templateUrl: './row.component.html',
+  styleUrls: ['./row.component.css']
 })
-export class RequestRowComponent {
+export class RowComponent {
   user: User | any = null;
   image: Image | any = null;
   url: string = "";

@@ -7,11 +7,11 @@ import { ImageService } from '../../../../services/image.service';
 import { Image } from '../../../../interfaces/image';
 
 @Component({
-  selector: 'app-table-view',
-  templateUrl: './table-view.component.html',
-  styleUrls: ['./table-view.component.css']
+  selector: 'app-table',
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.css']
 })
-export class TableViewComponent {
+export class TableComponent {
   requestList: Request[] = [];
   imagesList: Image[] = [];
   userList: User[] = [];

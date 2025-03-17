@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TableViewComponent } from './table-view.component';
+import { RowComponent } from './row.component';
 
-describe('TableViewComponent', () => {
-  let component: TableViewComponent;
-  let fixture: ComponentFixture<TableViewComponent>;
+describe('RequestRowComponent', () => {
+  let component: RowComponent;
+  let fixture: ComponentFixture<RowComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [TableViewComponent]
+      declarations: [RowComponent]
     });
-    fixture = TestBed.createComponent(TableViewComponent);
+    fixture = TestBed.createComponent(RowComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -5,16 +5,16 @@ import { AdministratorRoutingModule } from './administrator-routing.module';
 import { AngularMaterialModule } from '../angular-material/angular-material.module';
 import { SharedModule } from '../shared/shared.module';
 import { AdministratorComponent } from './components/administrator/administrator.component';
-import { TableViewComponent } from './components/table-view/table-view.component';
-import { RequestRowComponent } from './components/request-row/request-row.component';
+import { TableComponent } from './components/table/table.component';
+import { RowComponent } from './components/row/row.component';
 
 
 
 @NgModule({
   declarations: [
     AdministratorComponent,
-    TableViewComponent,
-    RequestRowComponent
+    TableComponent,
+    RowComponent
   ],
   imports: [
     CommonModule,

@@ -24,13 +24,13 @@
                     <strong>Action</strong>
                 </div>
             </div>
-            <app-request-row *ngFor="let request of filteredRequestList; let i = index"
+            <app-row *ngFor="let request of filteredRequestList; let i = index"
                 class="row py-1"
                 style="min-height: 45px; border-bottom: 1px solid black"
                 [request]="request"
                 [index]="i"
                 (updateEvent)="updateRequest($event)"
-            ></app-request-row>
+            ></app-row>
         </div>
     </div>
 </div>
