@@ -36,11 +36,12 @@ The backend for this application was built using Python packages Flask, Boto3, e
 ### API Endpoints
 
 #### User Endpoints
-- `GET /api/v1/users`: Get all users.
-- `GET /api/v1/users/id=`: Get all users.
-- `GET /api/v1/users`: Get all users.
-- `GET /api/v1/users`: Get all users.
-- `POST /api/sign-in`: Sign in a user.
+- `GET /api/v1/users`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
+- `GET /api/v1/users/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of user object with that id).
+- `POST /api/v1/users`: Input (json of user object), Patamaters (none), Output (json of user object of posted user).
+- `PUT /api/v1/users`: Input (json of user object), Patamaters (none), Output (updated json of user object).
+- `DELETE /api/v1/users`: Input (json of user object), Patamaters (none), Output (json of user object of deleted user).
+- `POST /api/users/auth`: Input (json with email_address), Patamaters (none), Output (json of user object with that email_address).
 
 #### Image Endpoints
 - `POST /upload-image`: Upload an image.
