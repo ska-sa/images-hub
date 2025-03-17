@@ -41,13 +41,15 @@ The backend for this application was built using Python packages Flask, Boto3, e
 - `POST /api/v1/users`: Input (json of user object), Patamaters (none), Output (json of user object of posted user).
 - `PUT /api/v1/users`: Input (json of user object), Patamaters (none), Output (updated json of user object).
 - `DELETE /api/v1/users`: Input (json of user object), Patamaters (none), Output (json of user object of deleted user).
-- `POST /api/users/auth`: Input (json with email_address), Patamaters (none), Output (json of user object with that email_address).
+- `POST /api/v1/users/auth`: Input (json with email_address), Patamaters (none), Output (json of user object with that email_address).
 
 #### Image Endpoints
-- `POST /upload-image`: Upload an image.
-- `GET /api/get-image/<filename>`: Get an image by filename.
-- `GET /api/get-image-data/<id>`: Get image data by ID.
-- `GET /api/get-images`: Get all images.
+- `GET /api/v1/images`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of image objects).
+- `GET /api/v1/images/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of image object with that id).
+- `GET /api/v1/images/<string:filename>`: Input (none), Patamaters (path paramater filename: string), Output (json of with image id and its S3 url).
+- `POST /api/v1/images`: Input (json of image object), Patamaters (none), Output (json of image object of posted user).
+- `PUT /api/v1/images`: Input (json of image object), Patamaters (none), Output (updated json of image object).
+- `DELETE /api/v1/images`: Input (json of image object), Patamaters (none), Output (json of image object of deleted image).
 
 #### Request Endpoints
 - `POST /api/post-request`: Post a new request.
