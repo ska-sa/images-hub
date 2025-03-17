@@ -52,10 +52,11 @@ The backend for this application was built using Python packages Flask, Boto3, e
 - `DELETE /api/v1/images`: Input (json of image object), Patamaters (none), Output (json of image object of deleted image).
 
 #### Request Endpoints
-- `POST /api/post-request`: Post a new request.
-- `GET /api/get-request-data/<id>`: Get request data by ID.
-- `GET /api/get-requests`: Get all requests.
-- `PUT /api/update-request`: Update a request.
+- `GET /api/v1/requests`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of request objects).
+- `GET /api/v1/requests/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of request object with that id).
+- `POST /api/v1/requests`: Input (json of request object), Patamaters (none), Output (json of request object of posted request).
+- `PUT /api/v1/requests`: Input (json of request object), Patamaters (none), Output (updated json of request object).
+- `DELETE /api/v1/requests`: Input (json of request object), Patamaters (none), Output (json of request object of deleted request).
 
 ## Front-End
 
