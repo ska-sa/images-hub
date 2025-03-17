@@ -58,6 +58,13 @@ The backend for this application was built using Python packages Flask, Boto3, e
 - `PUT /api/v1/requests`: Input (json of request object), Patamaters (none), Output (updated json of request object).
 - `DELETE /api/v1/requests`: Input (json of request object), Patamaters (none), Output (json of request object of deleted request).
 
+#### Link Endpoints
+- `GET /api/v1/links`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of link objects).
+- `GET /api/v1/links/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of link object with that id).
+- `POST /api/v1/links`: Input (json of link object), Patamaters (none), Output (json of link object of posted link).
+- `PUT /api/v1/links`: Input (json of link object), Patamaters (none), Output (updated json of link object).
+- `DELETE /api/v1/links`: Input (json of link object), Patamaters (none), Output (json of link object of deleted link).
+
 ## Front-End
 
 The front-end of the Image Hub is built using Angular 16, providing a user-friendly interface for interacting with the application's features.
