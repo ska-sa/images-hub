@@ -39,8 +39,7 @@ The backend for this application was built using Python packages Flask, Boto3, e
 - `POST /api/v1/emails`: Input (json with receiver_email_address subject and body), Patamaters (none), Output (json with status message).
 
 #### User Endpoints
-- `GET /api/v1/users`: 
-    Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
+- `GET /api/v1/users`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
 - `GET /api/v1/users/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of user object with that id).
 - `POST /api/v1/users`: Input (json of user object), Patamaters (none), Output (json of user object of posted user).
 - `PUT /api/v1/users`: Input (json of user object), Patamaters (none), Output (updated json of user object).
@@ -90,64 +89,46 @@ The frontend of this application is built using Angular 16 (comprising Hyper Tex
             <li>request</li>
             <li>link</li>
         </ul>
-        <li>modules</li>
+        <li>modules:</li>
         <ul>
-            <li>sign-in</li>
+            <li>administrator:</li>
+            <ul>
+                <li>components:</li>
+                <ul>
+                    <li>table</li>
+                    <li>row</li>
+                </ul>
+                <li>guard</li>
+            </ul>
+            <li>guest</li>
+            <ul>
+                <li>components:</li>
+                <ul>
+                    <li>request-details</li>
+                </ul>
+                <li>guard</li>
+            </ul>
+            <li>shared</li>
+            <ul>
+                <li>components:</li>
+                <ul>
+                    <li>header</li>
+                    <li>grid</li>
+                    <li>image-card</li>
+                    <li>image-details</li>
+                </ul>
+                <li>services:</li>
+                <ul>
+                    <li>user</li>
+                    <li>email</li>
+                    <li>image</li>
+                    <li>request</li>
+                    <li>link</li>
+                </ul>
+            </ul>
         </ul>
     </ul>
 </ul>
-
-app:
-    components:
-        sign-in
-    interfaces:
-        user
-        email
-        image
-        request
-        link
-    modules:
-        administrator:
-            components:
-                table
-                row
-            guard
-        guest:
-            components:
-                request-details
-            guard
-        shared:
-            components:
-                hearder
-                grid
-                image-card
-                image-details
-            services:
-                user
-                email
-                image
-                request
-                link
-
-
-### Features
-- User authentication (sign-in)
-- Browse and search low-quality images
-- View or request high-resolution image details
-- Browse and search requests
-- View request details and requested image
-
-### Angular Components
-- **SignInComponent**: Handles user sign-in functionality.
-- **BrowseImagesComponent**: Displays a list of uploaded images.
-- **ImageDetailsComponent**: Shows details of a selected image.
-- **BrowseRequestsComponent**: Displays a list of user requests.
-- **RequestDetailsComponent**: Provides details of a selected request.
-
-### Angular Services
-- **UserService**: Manages user-related operations, such as sign-in and user data.
-- **ImageService**: Handles image-related operations, such as fetching and displaying images.
-- **RequestService**: Manages request-related operations, such as fetching and displaying requests.
 
 ## Getting Started
 
