@@ -40,7 +40,7 @@ The backend for this application was built using Python packages Flask, Boto3, e
 
 #### User Endpoints
 - `GET /api/v1/users`: 
--   Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
+    Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
 - `GET /api/v1/users/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of user object with that id).
 - `POST /api/v1/users`: Input (json of user object), Patamaters (none), Output (json of user object of posted user).
 - `PUT /api/v1/users`: Input (json of user object), Patamaters (none), Output (updated json of user object).
