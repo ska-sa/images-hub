@@ -33,13 +33,14 @@ images-hub
 
 The backend for this application was built using Python packages Flask, Boto3, etc. And is responsible for inserting, selecting, updating and deleting data on our database and interacting with S3 bucket. This backend provides various Restful APIs for managing users, emails, images, requests, and links.
 
-### API Endpoints
+### Application Program Interface Endpoints
 
 #### Email Endpoints
 - `POST /api/v1/emails`: Input (json with receiver_email_address subject and body), Patamaters (none), Output (json with status message).
 
 #### User Endpoints
-- `GET /api/v1/users`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
+- `GET /api/v1/users`: 
+-   Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
 - `GET /api/v1/users/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of user object with that id).
 - `POST /api/v1/users`: Input (json of user object), Patamaters (none), Output (json of user object of posted user).
 - `PUT /api/v1/users`: Input (json of user object), Patamaters (none), Output (updated json of user object).
@@ -68,9 +69,44 @@ The backend for this application was built using Python packages Flask, Boto3, e
 - `PUT /api/v1/links`: Input (json of link object), Patamaters (none), Output (updated json of link object).
 - `DELETE /api/v1/links`: Input (json of link object), Patamaters (none), Output (json of link object of deleted link).
 
-## Front-End
+## Frontend
 
-The front-end of the Image Hub is built using Angular 16, providing a user-friendly interface for interacting with the application's features.
+The frontend of this application is built using Angular 16 (comprising Hyper Text Markup Language, Cascasde Style Sheet, and Typescript), providing a user-friendly interface for interacting with the application's features, and utilizing advanced angular feature such as lazy loading.
+
+### Angular Application Structure
+
+app:
+    components:
+        sign-in
+    interfaces:
+        user
+        email
+        image
+        request
+        link
+    modules:
+        administrator:
+            components:
+                table
+                row
+            guard
+        guest:
+            components:
+                request-details
+            guard
+        shared:
+            components:
+                hearder
+                grid
+                image-card
+                image-details
+            services:
+                user
+                email
+                image
+                request
+                link
+
 
 ### Features
 - User authentication (sign-in)
