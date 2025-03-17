@@ -75,6 +75,15 @@ The frontend of this application is built using Angular 16 (comprising Hyper Tex
 
 ### Angular Application Structure
 
+<ul>
+    <li>app</li>
+    <ul>
+        <li>components</li>
+        <li>interfaces</li>
+        <li>modules</li>
+    </ul>
+</ul>
+
 app:
     components:
         sign-in
