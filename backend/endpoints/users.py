@@ -125,7 +125,7 @@ def auth() -> tuple:
     except Exception as e:
             return jsonify({"message": f"An error occurred: {str(e)}"}), 500
 
-def put_user() -> str:
+def put_user() -> tuple:
     """
     Description: Handling the PUT /api/v1/users endpoint.
     Input: JSON with ('id', 'email_address', 'type').
@@ -156,7 +156,7 @@ def put_user() -> str:
     except Exception as e:
             return jsonify({"message": f"An error occurred: {str(e)}"}), 500
 
-def delete_user() -> str:
+def delete_user() -> tuple:
     """
     Description: Handling the DELETE /api/v1/users endpoint.
     Input: JSON with ('id', 'email_address', 'type').
@@ -190,88 +190,4 @@ def delete_user() -> str:
 
 
 
-
-
-
-
-def google_auth() -> tuple:
-    """
-    Description: Handling the POST /api/v1/users/google_auth endpoint.
-    Input: JSON with 'step' key.
-    Output: JSON of User object or 'message' key describing reason for process failure.
-    """
-    
-    db = Database()
-    table_name = 'user'
-
-    # OAuth2 Configuration
-    CLIENT_ID = os.getenv('GOOGLE_CLIENT_ID')
-    CLIENT_SECRET = os.getenv('GOOGLE_CLIENT_SECRET')
-    REDIRECT_URI = os.getenv('GOOGLE_REDIRECT_URI')
-    AUTHORIZATION_URL = 'https://accounts.google.com/o/oauth2/auth'
-    TOKEN_URL = 'https://oauth2.googleapis.com/token'
-    USER_INFO_URL = 'https://www.googleapis.com/oauth2/v3/userinfo'
-
-
-    data = dict(request.json)
-    if 'step' not in data:
-        return jsonify({"message": "Missing key 'step'!"}), 400
-
-
-
-    step = data['step']
-
-    if step == 1:
-        # Step 1: Redirect to Google OAuth2 authorization URL
-        authorization_url = f"{AUTHORIZATION_URL}?client_id={CLIENT_ID}&redirect_uri={REDIRECT_URI}&response_type=code&scope=email profile&access_type=offline&prompt=consent"
-        return jsonify({"authorization_url": authorization_url}), 200
-
-    elif step == 2:
-        # Step 2: Exchange authorization code for access token
-        authorization_code = data.get('code')
-        if not authorization_code:
-            return jsonify({"message": "Missing authorization code!"}), 400
-
-        token_response = requests.post(TOKEN_URL, data={
-            'grant_type': 'authorization_code',
-            'code': authorization_code,
-            'redirect_uri': REDIRECT_URI,
-            'client_id': CLIENT_ID,
-            'client_secret': CLIENT_SECRET,
-        })
-
-        if token_response.status_code != 200:
-            return jsonify({"message": "Failed to obtain access token.", "error": token_response.json()}), 400
-
-        token_data = token_response.json()
-        access_token = token_data['access_token']
-
-        # Step 3: Use the access token to get user info
-        user_info_response = requests.get(USER_INFO_URL, headers={
-            'Authorization': f'Bearer {access_token}'
-        })
-
-        if user_info_response.status_code != 200:
-            return jsonify({"message": "Failed to fetch user info.", "error": user_info_response.json()}), 400
-
-        user_info = dict(user_info_response.json())
-        email = user_info.get('email')
-
-        if email:
-            usr_list = db.read(table_name, criteria={'email_address': data['email_address']})
-            if usr_list:
-                usr = usr_list[0]
-                user = User(*usr).toJSON()
-            elif db.insert(table_name, {'email_address': data['email_address']}):
-                usr = db.read(table_name, {'email_address': data['email_address']})[0]
-                user = User(*usr).toJSON()
-            else:
-                return jsonify({"message": "User insertion failed!"}), 501
-        
-            return jsonify(user), 200
-        else:    
-            return jsonify({"message": "Missing key 'email_address'"}), 400
-
-    else:
-        return jsonify({"message": "Invalid step!"}), 400
     

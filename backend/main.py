@@ -10,7 +10,7 @@ from flask import Flask, request, jsonify # type: ignore
 from flask_cors import CORS  # type: ignore
 from dotenv import load_dotenv, set_key
 from endpoints.emails import send_email
-from endpoints.users import get_users, get_user, post_user, auth, google_auth, put_user, delete_user
+from endpoints.users import get_users, get_user, post_user, auth, put_user, delete_user
 from endpoints.images import get_images, get_image, get_image_s3_url, upload_image, put_image, delete_image
 from endpoints.requests import get_requests, get_request, post_request, put_request, delete_request
 from endpoints.links import get_links, get_link, download_image, post_link, put_link, delete_link
@@ -104,13 +104,6 @@ def auth_route():
     if validation_response:
         return validation_response
     return auth()
-
-@app.route('/api/v1/users/users/google_auth', methods=['POST'])
-def goofle_auth_route():
-    validation_response = backend.validate_api_key()
-    if validation_response:
-        return validation_response
-    return google_auth()
 
 
 @app.route('/api/v1/images', methods=['GET'])
