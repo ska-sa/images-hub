@@ -1,10 +1,13 @@
 version: '3'
 services:
   backend:
-    build: Back_End
+    build:
+      context: ./backend
     ports:
-      - "8080:8080"
+      - "5000:5000"
+  
   frontend:
-    build: Front_End
+    build:
+      context: ./frontend
     ports:
-      - "80:80"
+      - "80:3000"
