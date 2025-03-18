@@ -10,24 +10,32 @@ The Image Hub is a web application designed to address the challenges of managin
 
 ## Project File Structure
 
-images-hub
-- /backend
-- - /classes
-- - /databases
-- - /endpoints
-- - /outputs
-- - /tests
-- - /tmp
-- - venv (excluded)
-- /configuration
-- /design
-- /frontend
-- .dockerignore
-- .gitignore
-- docker-compose.yaml
-- Dockerfile
-- Makefile
-- README.md
+<ul>
+    <li>images-hub
+        <ul>
+            <li>/backend
+                <ul>
+                    <li>/classes</li>
+                    <li>/databases</li>
+                    <li>/endpoints</li>
+                    <li>/outputs</li>
+                    <li>/tests</li>
+                    <li>/tmp</li>
+                    <li>venv (excluded)</li>
+                </ul>
+            </li>
+            <li>/configuration</li>
+            <li>/design</li>
+            <li>/frontend</li>
+            <li>.dockerignore</li>
+            <li>.gitignore</li>
+            <li>docker-compose.yaml</li>
+            <li>Dockerfile</li>
+            <li>Makefile</li>
+            <li>README.md</li>
+        </ul>
+    </li>
+</ul>
 
 ## Backend
 
@@ -70,9 +78,9 @@ The backend for this application was built using Python packages Flask, Boto3, e
 
 ## Frontend
 
-The frontend of this application is built using Angular 16 (comprising Hyper Text Markup Language, Cascasde Style Sheet, and Typescript), providing a user-friendly interface for interacting with the application's features, and utilizing advanced angular feature such as lazy loading.
+The frontend of this application is built using Angular 16, which incorporates Hypertext Markup Language (HTML), Cascading Style Sheets (CSS), and TypeScript. This combination provides a user-friendly interface for interacting with the application's features. Also, it leverages advanced Angular capabilities, such as lazy loading, to enhance performance and efficiency.
 
-### Angular Application Structure
+### Angular Building Blocks
 
 <ul>
     <li>app</li>
@@ -131,43 +139,47 @@ The frontend of this application is built using Angular 16 (comprising Hyper Tex
 </ul>
 
 ## Getting Started
-
 To clone and run this project, follow these steps:
 
-### Prerequisites
+`git clone https://github.com/ska-sa/images-hub.git`
+`cd images-hub`
 
-- Ensure you have [Docker](https://www.docker.com/) installed on your machine.
-- Install Python and create a virtual environment for the backend.
+### Running the Application with Virtual Environments\
+Now split our terminal, and ensure that both are point at the project (images-hub).
 
-### Clone the Repository
+Setup the backend:
+Navigate to the backend folder:
 
-`git clone https://github.com/sanelehlabisa/ImagesHub`
-`cd ImagesHub`
-Set Up the Backend
-Navigate to the Back_End folder:
-
-`cd Back_End`
+`cd backend`
 Create a Python virtual environment and activate it:
 
 `python3 -m virtualenv venv`
-`source venv/bin/activate`  # On Windows use `venv\Scripts\activate`
-
+`. venv/bin/activate`
 Install the required packages:
-`pip install -r requirements.txt`
 
-Set Up the Front-End
+`venv/bin/python -m pip install -r requirements.txt`
+Running the backend application:
 
-Navigate to the Front_End folder:
+`venv/bin/python -m main.py --env production`
+Setup the frontend:
+On the other terminal, navigate to the frontend folder:
 
-`cd ../Front_End`
+`cd frontend`
 Install the required packages:
 
 `npm install`
-Running the Application with Docker
-Return to the root directory of the project:
+Running the fontend application:
 
-`cd ..`
+`ng serve --port 3000`
+
+
+### Running the Application with Docker
+Download our images from dockerhub:
+
+`docker image pull images-hub-backend`
+`docker image pull images-hub-frontend`
 Start the application using Docker Compose:
+After cloning our repo, navigate to our project directory and run docker-compose, makesure you have you own .env file on our project directory:
 
 `docker-compose up`
 This command will build the necessary containers and start the application.
