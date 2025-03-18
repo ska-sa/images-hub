@@ -35,9 +35,9 @@ app.config['DEBUG'] = (args.env == "development")
 app.config['TESTING'] = (args.env == "testing")
 
 # Enable CORS for all routes
-CORS(app, resources={r"/api/*": {"origins": "http://localhost:4200"}})
+CORS(app, resources={r"/api/*": {"origins": "http://localhost:3000"}})
 
-class Back_End:
+class Backend:
     def __init__(self):
         self.api_key = os.getenv('API_KEY')
 
@@ -53,7 +53,7 @@ class Back_End:
     def forbidden_response(self):
         return jsonify({'error': 'Forbidden'}), 403
 
-backend = Back_End()
+backend = Backend()
 
 @app.route('/api/v1/emails', methods=['POST'])
 def send_email_route():
@@ -234,4 +234,4 @@ def delete_link_route():
     return delete_link()
  
 if __name__ == '__main__':
-    app.run(host='localhost', debug=True)
+    app.run(host='0.0.0.0', debug=True)
