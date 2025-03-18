@@ -16,12 +16,12 @@ The Image Hub is a web application designed to address the challenges of managin
             <li>/backend
                 <ul>
                     <li>/classes</li>
-                    <li>/databases</li>
+                    <li>/databases (excluded)</li>
                     <li>/endpoints</li>
                     <li>/outputs</li>
                     <li>/tests</li>
                     <li>/tmp</li>
-                    <li>venv (excluded)</li>
+                    <li>/venv (excluded)</li>
                 </ul>
             </li>
             <li>/configuration</li>
@@ -44,7 +44,7 @@ The backend for this application was built using Python packages Flask, Boto3, e
 ### Application Program Interface Endpoints
 
 #### Email Endpoints
-- `POST /api/v1/emails`: Input (json with receiver_email_address subject and body), Patamaters (none), Output (json with status message).
+- `POST /api/v1/emails`: <br/>&emsp; Input (json with receiver_email_address subject and body), Patamaters (none), Output (json with status message).
 
 #### User Endpoints
 - `GET /api/v1/users`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
