@@ -11,9 +11,11 @@ The Image Hub is a web application designed to address the challenges of managin
 ## Project File Structure
 
 <ul>
-    <li>images-hub
+    <li>
+        /images-hub
         <ul>
-            <li>/backend
+            <li>
+                /backend
                 <ul>
                     <li>/classes</li>
                     <li>/databases (excluded)</li>
@@ -26,11 +28,35 @@ The Image Hub is a web application designed to address the challenges of managin
             </li>
             <li>/configuration</li>
             <li>/design</li>
-            <li>/frontend</li>
-            <li>.dockerignore</li>
+            <li>
+                /frontend
+                <ul>
+                    <li>/node_modules (excluded)</li>
+                    <li>
+                        /src
+                        <ul>
+                            <li>/app</li>
+                            <li>/assets</li>
+                            <li>/environments</li>
+                            <li>favicon.icoo</li>
+                            <li>index.html</li>
+                            <li>main.ts</li>
+                            <li>style.css</li>
+                        </ul>
+                    </li>
+                    <li>.dockerignore</li>
+                    <li>.editorconfig</li>
+                    <li>angular.json</li>
+                    <li>Dockerfile</li>
+                    <li>nginx.conf</li>
+                    <li>package-lock.json</li>
+                    <li>tsconfig.app.json</li>
+                    <li>tsconfig.json</li>
+                    <li>tsconfig.spec.json</li>
+                </ul>
+            </li>
             <li>.gitignore</li>
             <li>docker-compose.yaml</li>
-            <li>Dockerfile</li>
             <li>Makefile</li>
             <li>README.md</li>
         </ul>
@@ -47,34 +73,34 @@ The backend for this application was built using Python packages Flask, Boto3, e
 - `POST /api/v1/emails`: <br/>&emsp; Input (json with receiver_email_address subject and body), Patamaters (none), Output (json with status message).
 
 #### User Endpoints
-- `GET /api/v1/users`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
-- `GET /api/v1/users/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of user object with that id).
-- `POST /api/v1/users`: Input (json of user object), Patamaters (none), Output (json of user object of posted user).
-- `PUT /api/v1/users`: Input (json of user object), Patamaters (none), Output (updated json of user object).
-- `DELETE /api/v1/users`: Input (json of user object), Patamaters (none), Output (json of user object of deleted user).
-- `POST /api/v1/users/auth`: Input (json with email_address), Patamaters (none), Output (json of user object with that email_address).
+- `GET /api/v1/users`: <br/>&emsp; Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of user objects).
+- `GET /api/v1/users/<int:id>`: <br/>&emsp; Input (none), Patamaters (path paramater id: int), Output (json of user object with that id).
+- `POST /api/v1/users`: <br/>&emsp; Input (json of user object), Patamaters (none), Output (json of user object of posted user).
+- `PUT /api/v1/users`: <br/>&emsp; Input (json of user object), Patamaters (none), Output (updated json of user object).
+- `DELETE /api/v1/users`: <br/>&emsp; Input (json of user object), Patamaters (none), Output (json of user object of deleted user).
+- `POST /api/v1/users/auth`: <br/>&emsp; Input (json with email_address), Patamaters (none), Output (json of user object with that email_address).
 
 #### Image Endpoints
-- `GET /api/v1/images`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of image objects).
-- `GET /api/v1/images/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of image object with that id).
-- `GET /api/v1/images/<string:filename>`: Input (none), Patamaters (path paramater filename: string), Output (json of with image id and its S3 url).
-- `POST /api/v1/images`: Input (json of image object), Patamaters (none), Output (json of image object of posted user).
-- `PUT /api/v1/images`: Input (json of image object), Patamaters (none), Output (updated json of image object).
-- `DELETE /api/v1/images`: Input (json of image object), Patamaters (none), Output (json of image object of deleted image).
+- `GET /api/v1/images`: <br/>&emsp; Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of image objects).
+- `GET /api/v1/images/<int:id>`: <br/>&emsp; Input (none), Patamaters (path paramater id: int), Output (json of image object with that id).
+- `GET /api/v1/images/<string:filename>`: <br/>&emsp; Input (none), Patamaters (path paramater filename: string), Output (json of with image id and its S3 url).
+- `POST /api/v1/images`: <br/>&emsp; Input (json of image object), Patamaters (none), Output (json of image object of posted user).
+- `PUT /api/v1/images`: <br/>&emsp; Input (json of image object), Patamaters (none), Output (updated json of image object).
+- `DELETE /api/v1/images`: <br/>&emsp; Input (json of image object), Patamaters (none), Output (json of image object of deleted image).
 
 #### Request Endpoints
-- `GET /api/v1/requests`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of request objects).
-- `GET /api/v1/requests/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of request object with that id).
-- `POST /api/v1/requests`: Input (json of request object), Patamaters (none), Output (json of request object of posted request).
-- `PUT /api/v1/requests`: Input (json of request object), Patamaters (none), Output (updated json of request object).
-- `DELETE /api/v1/requests`: Input (json of request object), Patamaters (none), Output (json of request object of deleted request).
+- `GET /api/v1/requests`: <br/>&emsp; Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of request objects).
+- `GET /api/v1/requests/<int:id>`: <br/>&emsp; Input (none), Patamaters (path paramater id: int), Output (json of request object with that id).
+- `POST /api/v1/requests`: <br/>&emsp; Input (json of request object), Patamaters (none), Output (json of request object of posted request).
+- `PUT /api/v1/requests`: <br/>&emsp; Input (json of request object), Patamaters (none), Output (updated json of request object).
+- `DELETE /api/v1/requests`: <br/>&emsp; Input (json of request object), Patamaters (none), Output (json of request object of deleted request).
 
 #### Link Endpoints
-- `GET /api/v1/links`: Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of link objects).
-- `GET /api/v1/links/<int:id>`: Input (none), Patamaters (path paramater id: int), Output (json of link object with that id).
-- `POST /api/v1/links`: Input (json of link object), Patamaters (none), Output (json of link object of posted link).
-- `PUT /api/v1/links`: Input (json of link object), Patamaters (none), Output (updated json of link object).
-- `DELETE /api/v1/links`: Input (json of link object), Patamaters (none), Output (json of link object of deleted link).
+- `GET /api/v1/links`: <br/>&emsp; Input (none), Patamaters (optional path paramater min_id: int and max_id: int), Output (list of json of link objects).
+- `GET /api/v1/links/<int:id>`: <br/>&emsp; Input (none), Patamaters (path paramater id: int), Output (json of link object with that id).
+- `POST /api/v1/links`: <br/>&emsp; Input (json of link object), Patamaters (none), Output (json of link object of posted link).
+- `PUT /api/v1/links`: <br/>&emsp; Input (json of link object), Patamaters (none), Output (updated json of link object).
+- `DELETE /api/v1/links`: <br/>&emsp; Input (json of link object), Patamaters (none), Output (json of link object of deleted link).
 
 ## Frontend
 
@@ -85,11 +111,11 @@ The frontend of this application is built using Angular 16, which incorporates H
 <ul>
     <li>app</li>
     <ul>
-        <li>components</li>
+        <li>components:</li>
         <ul>
             <li>sign-in</li>
         </ul>
-        <li>interfaces</li>
+        <li>interfaces:</li>
         <ul>
             <li>user</li>
             <li>email</li>
