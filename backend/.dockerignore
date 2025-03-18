@@ -2,4 +2,8 @@ venv/*
 
 *pycache*
 
-*token*.json
+*cache*
+
+*.env
+
+#databases/*
