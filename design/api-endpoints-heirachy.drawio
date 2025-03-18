@@ -1,0 +1,43 @@
+<mxfile host="65bd71144e">
+    <diagram id="vDFaCMqAs25Oy_O5YzHm" name="Page-1">
+        <mxGraphModel dx="1682" dy="-632" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="59" value="/api/v1" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingBottom=5;spacingLeft=5;spacingRight=5;spacingTop=5;" vertex="1" parent="1">
+                    <mxGeometry x="-800" y="1880" width="120" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="/emails" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingBottom=5;spacingLeft=5;spacingRight=5;spacingTop=5;" vertex="1" parent="1">
+                    <mxGeometry x="-760" y="1910" width="120" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="POST" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingBottom=5;spacingLeft=5;spacingRight=5;spacingTop=5;" vertex="1" parent="1">
+                    <mxGeometry x="-720" y="1940" width="590" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="Input : JSON with email, subject, and body" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=2;align=left;spacingLeft=5;spacingRight=5;" vertex="1" parent="1">
+                    <mxGeometry x="-640" y="1940" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="63" value="Paramaters: none" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=2;align=left;spacingLeft=5;spacingRight=5;" vertex="1" parent="1">
+                    <mxGeometry x="-470" y="1940" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="64" value="Output: JSON with status message" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=2;align=left;spacingLeft=5;spacingRight=5;" vertex="1" parent="1">
+                    <mxGeometry x="-300" y="1940" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="66" value="/users" style="rounded=0;whiteSpace=wrap;html=1;align=left;spacingBottom=5;spacingLeft=5;spacingRight=5;spacingTop=5;" vertex="1" parent="1">
+                    <mxGeometry x="-760" y="1990" width="120" height="20" as="geometry"/>
+                </mxCell>
+                <mxCell id="67" value="GET" style="rounded=1;whiteSpace=wrap;html=1;align=left;spacingBottom=5;spacingLeft=5;spacingRight=5;spacingTop=5;" vertex="1" parent="1">
+                    <mxGeometry x="-720" y="2020" width="590" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="68" value="Input : None" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=2;align=left;spacingLeft=5;spacingRight=5;" vertex="1" parent="1">
+                    <mxGeometry x="-640" y="2020" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="Paramaters: Path Para min_id and ma_id" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=2;align=left;spacingLeft=5;spacingRight=5;" vertex="1" parent="1">
+                    <mxGeometry x="-470" y="2020" width="160" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="70" value="Output: JSON with status message" style="rounded=0;whiteSpace=wrap;html=1;fontStyle=2;align=left;spacingLeft=5;spacingRight=5;" vertex="1" parent="1">
+                    <mxGeometry x="-300" y="2020" width="160" height="40" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>

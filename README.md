@@ -37,7 +37,7 @@ The Image Hub is a web application designed to address the challenges of managin
                         <ul>
                             <li>/app</li>
                             <li>/assets</li>
-                            <li>/environments</li>
+                            <li>/environments (excluded)</li>
                             <li>favicon.icoo</li>
                             <li>index.html</li>
                             <li>main.ts</li>
