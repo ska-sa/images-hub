@@ -9,6 +9,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ImageCardComponent } from './components/image-card/image-card.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MessageDialogComponent } from './components/message-dialog/message-dialog.component';
 
 const matertialComponent = [
   MatIconModule,
@@ -20,7 +21,8 @@ const matertialComponent = [
     HeaderComponent,
     GridViewComponent,
     ImageDetailsComponent,
-    ImageCardComponent
+    ImageCardComponent,
+    MessageDialogComponent
   ],
   imports: [
     CommonModule,
