@@ -11,6 +11,7 @@ import { RequestService } from '../../../../services/request.service';
 import { RequestDetailsComponent } from '../../../../modules/guest/components/request-details/request-details.component';
 import { ImageService } from '../../../../services/image.service';
 import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
+import { CopyLinkDialogComponent } from '../copy-link-dialog/copy-link-dialog.component';
 
 interface S3Image {
   id: number;
@@ -98,10 +99,22 @@ export class ImageCardComponent implements OnInit {
 
     this.linkService.postLink(link).subscribe({
       next: (res) => {
-        alert(`Generated Link: ${environment.host}/links/${link.key}`);
-
+        //alert(`Generated Link: ${environment.host}/links/${link.key}`);
+        const generatedLink = `${environment.host}/links/${link.key}`; // Generated link to download this image
+        this.openCopyLinkDialog('Link Generated!', generatedLink);
       },
       error: err => { console.log(err) }
+    });
+  }
+
+  openCopyLinkDialog(title: string, link: string): void {
+    this.dialog.open(CopyLinkDialogComponent, {
+      data: {
+        title: title,
+        link: link
+      },
+      width: 'auto',
+      maxWidth: '100vw'
     });
   }
 

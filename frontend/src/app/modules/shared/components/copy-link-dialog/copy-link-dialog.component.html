@@ -6,9 +6,8 @@
 <h2 mat-dialog-title>{{ data.title }}</h2>
 <div class="copy-container">
   <input type="text" class="copy-input" [value]="data.link" readonly>
-  <button class="copy-btn" [class.copied]="copied" (click)="copyToClipboard(data.link)">
-    <span class="copy-text">Copy</span>
-    <span class="copied-text">Copied!</span>
-    <mat-icon class="copy-icon">content_copy</mat-icon>
+  <button class="copy-btn" [class.copied]="copied" (click)="toggleCopyState()">
+    <i class="far fa-copy copy-link"></i>
+    <span class="copy-btn-text">{{ copyLinkButtonText }}</span>
   </button>
 </div>

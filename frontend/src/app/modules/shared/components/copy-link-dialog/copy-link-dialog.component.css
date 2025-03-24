@@ -1,7 +1,10 @@
+/* copy-link-dialog.component.css */
 .copy-container {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    flex-grow: 1;
+    padding: 10px;
+    gap: 1;
   }
   
   .copy-input {
@@ -10,6 +13,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 1rem;
+    flex-grow: 1;
   }
   
   .copy-btn {
@@ -25,31 +29,23 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background-color 0.3s ease;
+
+    width: 100px; /* Set the width of the button */
   }
   
   .copy-btn:hover {
     background-color: #0056b3;
   }
   
-  .copy-text,
-  .copied-text {
-    opacity: 1;
-    transition: opacity 0.3s ease;
+  .copy-btn.copied {
+    background-color: #28a745;
   }
   
-  .copied-text {
-    opacity: 0;
-  }
-  
-  .copy-btn.copied .copy-text {
-    opacity: 0;
-  }
-  
-  .copy-btn.copied .copied-text {
-    opacity: 1;
-  }
-  
-  .copy-icon {
+  .copy-link {
     font-size: 1.2rem;
+  }
+  
+  .copy-btn-text {
+    margin-left: 0.5rem;
   }
   

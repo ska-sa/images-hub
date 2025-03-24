@@ -7,7 +7,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./copy-link-dialog.component.css']
 })
 export class CopyLinkDialogComponent implements OnInit {
-  copied: boolean = false; // Track if the link has been copied
+  copied: boolean = false;
+  copyLinkButtonText: string = 'Copy';
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { title: string, link: string },
@@ -15,23 +16,29 @@ export class CopyLinkDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // Automatically copy the link to the clipboard
-    this.copyToClipboard(this.data.link);
-    
-    // Set copied state to true and automatically close the dialog after 5 seconds
-    this.copied = true;
-    setTimeout(() => {
-      this.close();
-    }, 5000);
+    // Do nothing, wait for user to click the button
   }
 
   copyToClipboard(link: string): void {
-    const textarea = document.createElement('textarea');
-    textarea.value = link;
-    document.body.appendChild(textarea);
-    textarea.select();
-    document.execCommand('copy');
-    document.body.removeChild(textarea);
+    navigator.clipboard.writeText(link)
+      .then(() => {
+        this.copied = true;
+        this.copyLinkButtonText = 'Copied';
+        setTimeout(() => {
+          this.close();
+        }, 2000);
+      })
+      .catch((error) => {
+        console.error('Failed to copy text: ', error);
+      });
+  }
+
+  toggleCopyState(): void {
+    if (!this.copied) {
+      this.copyToClipboard(this.data.link);
+    } else {
+      this.close();
+    }
   }
 
   close(): void {
