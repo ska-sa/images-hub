@@ -1,0 +1,14 @@
+<mat-dialog-actions class="d-flex justify-content-end">
+  <button class="btn btn-danger d-flex justify-content-center align-items-center" (click)="close()">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-dialog-actions>
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<div class="copy-container">
+  <input type="text" class="copy-input" [value]="data.link" readonly>
+  <button class="copy-btn" [class.copied]="copied" (click)="copyToClipboard(data.link)">
+    <span class="copy-text">Copy</span>
+    <span class="copied-text">Copied!</span>
+    <mat-icon class="copy-icon">content_copy</mat-icon>
+  </button>
+</div>
