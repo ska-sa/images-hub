@@ -2,13 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './components/header/header.component';
 import { FormsModule } from '@angular/forms';
-import { AngularMaterialModule } from '../angular-material/angular-material.module';
 import { GridViewComponent } from './components/grid-view/grid-view.component';
 import { RouterModule } from '@angular/router';
 import { ImageDetailsComponent } from './components/image-details/image-details.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { ImageCardComponent } from './components/image-card/image-card.component';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+const matertialComponent = [
+  MatIconModule,
+  MatProgressSpinnerModule
+];
 
 @NgModule({
   declarations: [
@@ -20,15 +25,16 @@ import { ImageCardComponent } from './components/image-card/image-card.component
   imports: [
     CommonModule,
     FormsModule,
-    AngularMaterialModule,
     RouterModule,
-    MatDialogModule
+    MatDialogModule,
+    matertialComponent
   ],
   exports: [
     HeaderComponent,
     ImageDetailsComponent,
     MatDialogModule,
-    ImageCardComponent
+    ImageCardComponent,
+    matertialComponent
   ]
 })
 export class SharedModule { }

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { GuestRoutingModule } from './guest-routing.module';
 
 import { SharedModule } from '../shared/shared.module';
-import { AngularMaterialModule } from '../angular-material/angular-material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GuestComponent } from './components/guest/guest.component';
 import { RequestDetailsComponent } from './components/request-details/request-details.component';
@@ -18,7 +17,6 @@ import { RequestDetailsComponent } from './components/request-details/request-de
   imports: [
     CommonModule,
     GuestRoutingModule,
-    AngularMaterialModule,
     SharedModule,
     ReactiveFormsModule
   ]
