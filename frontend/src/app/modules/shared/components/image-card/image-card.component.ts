@@ -9,7 +9,8 @@ import { LinkService } from '../../../../services/link.service';
 import { UserService } from '../../../../services/user.service';
 import { RequestService } from '../../../../services/request.service';
 import { RequestDetailsComponent } from '../../../../modules/guest/components/request-details/request-details.component';
-import { ImageService } from 'src/app/services/image.service';
+import { ImageService } from '../../../../services/image.service';
+import { MessageDialogComponent } from '../message-dialog/message-dialog.component';
 
 interface S3Image {
   id: number;
@@ -30,6 +31,9 @@ export class ImageCardComponent implements OnInit {
   highResUrl: string = "";
   isAdministrator: boolean = false;
 
+  lowResResponse: any = null;
+  highResResponse: any = null;
+
   constructor(private dialog: MatDialog, private linkService: LinkService, private userService: UserService, public requestService: RequestService, public imageService: ImageService) {
 
   }
@@ -42,16 +46,16 @@ export class ImageCardComponent implements OnInit {
     }
     //console.log(`User type ${this.isAdministrator} ${user?.type}`)
 
-    const lowResResponse = await this.imageService.getImageUrl(this.image.low_res_image_filename, 'low').toPromise();
-    const highResResponse = await this.imageService.getImageUrl(this.image.high_res_image_filename, 'high').toPromise();
+    this.lowResResponse = await this.imageService.getImageUrl(this.image.low_res_image_filename, 'low').toPromise();
+    this.highResResponse = await this.imageService.getImageUrl(this.image.high_res_image_filename, 'high').toPromise();
     //this.createBlobUrl(lowResResponse?.url ?? "");
   
     this.filename = this.image.high_res_image_filename;
-    this.url = highResResponse?.url ?? '';
+    this.url = this.highResResponse?.url ?? '';
     this.highResUrl = this.url;
     if (! this.isAdministrator) {
       this.filename = this.image.low_res_image_filename;
-      this.url = lowResResponse?.url ?? '';
+      this.url = this.lowResResponse?.url ?? '';
     }
 
     //console.log(this.filename);
@@ -125,19 +129,58 @@ export class ImageCardComponent implements OnInit {
     }
   }
 
+  async openMessageModel(title: string, message: string): Promise<void> {
+    try{
+      this.dialog.open(MessageDialogComponent, {
+        width: 'auto',
+        maxWidth: '100vw',
+        data: {
+          title: title,
+          message: message
+        }
+      });
+    } catch (error) {
+      console.log(`Error ${error}`)
+    }
+  }
+
   async openModel(): Promise<void> {
     if(this.isAdministrator) {
       this.openImageModal();
     } else {
       this.requestService.getRequests().subscribe({
         next: (reqs) => { 
-          const requests: Request[] = reqs.filter(req => req.user_id == this.userService.getSignedInUser()?.id && req.image_id == this.image?.id  && req?.status == 1 );
+          const requests: Request[] = reqs.filter(req => req.user_id == this.userService.getSignedInUser()?.id && req.image_id == this.image?.id);
+          let status = 3
+          if(requests.length > 0) {
+            status = requests[0].status;
+          }
+          switch(status){
+            case 0:
+              this.openMessageModel("Request Already Sent!", `Hi,<br /><br />You have already sent a request for this image ${this.image.low_res_image_filename}.<br /><br />Please wait for the administrators to approve your request.<br /><br />Thanks<br /><br />Kind Regards<br />Images Hub Team`);
+              break;
+            case 1:
+              this.url = this.highResResponse?.url ?? '';
+              this.openImageModal();
+              break;
+            case 2:
+              this.openMessageModel("Request Rejected!", "Hi<br /><br />We regret to let you know that out administrators have decided to reject your request.<br /><br />Kind Regards<br />Images Hub Team");
+              break;
+            default:
+              this.openRequestModel();
+          }
+         /* 
           if (requests.length > 0) {
             this.url = this.highResUrl;
             this.openImageModal();
           } else {
-            this.openRequestModel();
-          }
+            const r: Request[] = reqs.filter(req => req.user_id == this.userService.getSignedInUser()?.id && req.image_id == this.image?.id  && req?.status == 0 );
+            if(r.length > 0) {
+              this.openMessageModel();
+            } else {
+              this.openRequestModel();
+            }
+          }*/
         },
         error: err => { console.log(err) }
       });

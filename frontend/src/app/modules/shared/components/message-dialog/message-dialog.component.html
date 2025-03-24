@@ -1,1 +1,10 @@
-<p>message-dialog works!</p>
+<mat-dialog-actions class="d-flex justify-content-end">
+    <button class="btn btn-danger d-flex justify-content-center align-items-center" (click)="close()">
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-dialog-actions>
+
+<h2 mat-dialog-title>{{ data.title }}</h2>
+<mat-dialog-content style="text-align: left;">
+    <div [innerHTML]="data.message"></div>
+</mat-dialog-content>
