@@ -77,6 +77,9 @@ export class UserService {
   
 
   public getSignedInUser(): User | null {
+    if(!this.userSubject.value) {
+      this.setUser(this.loadUserFromLocalStorage())
+    }
     return this.userSubject.value;
   }
 
