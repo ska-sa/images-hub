@@ -71,7 +71,8 @@ def download_image(key: str) -> tuple:
     """
     db = Database()
     table_name = 'link'
-    
+    load_dotenv()
+    app_url = os.getenv("APP_URL")
     try:
         links_list = db.read(table_name, criteria={'key': key})
         
@@ -79,7 +80,66 @@ def download_image(key: str) -> tuple:
             link = links_list[0]
             lnk = Link(*link)
             if lnk.limit == 0:
-                return jsonify({"message": "Link is expired."}), 403
+                # Display failed download image
+                html = f"""
+                    <!DOCTYPE html>
+                    <html lang="en">
+                    <head>
+                        <meta charset="UTF-8">
+                        <link rel="icon" type="image/x-icon" href="../res/nrf_logo.png">
+                        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <title>Images Hub</title>
+                        <style>
+                            body {{
+                                margin: 0;
+                                padding: 0;
+                                font-family: Arial, sans-serif;
+                                background-color: #f0f0f0;
+                            }}
+                            .failed-container {{
+                                display: flex;
+                                flex-direction: column;
+                                justify-content: center;
+                                align-items: center;
+                                height: 100vh;
+                            }}
+                            .failed-image {{
+                                max-width: 300px;
+                                animation: pulse 2s infinite;
+                            }}
+                            .failed-message {{
+                                margin-top: 20px;
+                                font-size: 18px;
+                                text-align: center;
+                            }}
+                            .redirect-link {{
+                                margin-top: 20px;
+                                color: #007bff;
+                                text-decoration: none;
+                            }}
+                            .logo{{
+                                margin: 10px;
+                            }}
+                            @keyframes pulse {{
+                                0% {{ transform: scale(1); }}
+                                50% {{ transform: scale(1.2); }}
+                                100% {{ transform: scale(1); }}
+                            }}
+                        </style>
+                    </head>
+                    <body>
+                        <div class="failed-container">
+                            <img src="{{ url_for('res', filename='sarao_logo.png') }}" alt="SARAO Logo" class="logo">
+                            <img src="/static/failed_download.png" alt="Failed Download" class="failed-image">
+                            <div class="failed-message">
+                                The download link has expired. Please go back to the app and request the image again.
+                            </div>
+                            <a href="{app_url}" class="redirect-link">Go to Sign In Page</a>
+                        </div>
+                    </body>
+                    </html>
+                """
+                return html, 200
             
             images_list = db.read("image", criteria={'id': lnk.image_id})
             if images_list:
@@ -90,18 +150,91 @@ def download_image(key: str) -> tuple:
                 lnk.limit = lnk.limit - 1
                 if db.update(table_name, {'limit': lnk.limit},{'id': lnk.id}):
                     high_res_download_url = generate_presigned_url(high_res_bucket, filename)
-                    return redirect(high_res_download_url)
+                    
+                    # Display custom HTML code snippet with a growing and shrinking download icon
+                    html = f"""
+                        <!DOCTYPE html>
+                        <html lang="en">
+                        <head>
+                            <meta charset="UTF-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                            <link rel="icon" type="image/x-icon" href="../res/nrf_logo.png">
+                            <title>Images Hub</title>
+                            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                            <style>
+                                body {{
+                                    margin: 0;
+                                    padding: 0;
+                                    font-family: Arial, sans-serif;
+                                }}
+                                .download-container {{
+                                    display: flex;
+                                    flex-direction: column;
+                                    justify-content: center;
+                                    align-items: center;
+                                    height: 100vh;
+                                }}
+                                .download-link {{
+                                    display: flex;
+                                    justify-content: center;
+                                    align-items: center;
+                                    font-size: 4rem;
+                                    color: #007bff;
+                                    text-decoration: none;
+                                    animation: pulse 2s infinite;
+                                }}
+                                .download-icon {{
+                                    transform-origin: center center;
+                                    animation: grow-shrink 2s infinite;
+                                }}
+                                .download-status {{
+                                    margin-top: 20px;
+                                    font-size: 18px;
+                                }}
+                                .redirect-link {{
+                                    margin-top: 20px;
+                                    color: #007bff;
+                                    text-decoration: none;
+                                }}
+                                .logo{{
+                                    margin: 10px;
+                                }}
+                                @keyframes pulse {{
+                                    0% {{ transform: scale(1); }}
+                                    50% {{ transform: scale(1.2); }}
+                                    100% {{ transform: scale(1); }}
+                                }}
+                                @keyframes grow-shrink {{
+                                    0% {{ transform: scale(1); }}
+                                    50% {{ transform: scale(1.5); }}
+                                    100% {{ transform: scale(1); }}
+                                }}
+                            </style>
+                        </head>
+                        <body>
+                            <div class="download-container">
+                                <img src="{{ url_for('res', filename='sarao_logo.png') }}" alt="SARAO Logo" class="logo" s>
+                                <a href="{high_res_download_url}" class="download-link">
+                                    <i class="fa fa-download" aria-hidden="true"></i>
+                                </a>
+                                <div class="download-status">
+                                    Downloading image...
+                                </div>
+                                <a href="{app_url}" class="redirect-link">Go to Sign In Page</a>
+                            </div>
+                        </body>
+                        </html>
+                    """
+                    return html, 200
                 else:
                     return jsonify({"message": "Link update failed."}), 404
             else:
                 return jsonify({"message": "Image not found."}), 404
         else:
             return jsonify({"message": "Link not found."}), 404
-
-    except FileNotFoundError:
-        abort(404)  # Return a 404 error if the file is not found
     except Exception as e:
-        return jsonify({"message": f"An error occurred: {str(e)}"}), 500
+        print(f"Error in download_image: {e}")
+        return jsonify({"message": "An error occurred."}), 500
 
 
 def post_link() -> tuple:
