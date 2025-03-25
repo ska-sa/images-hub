@@ -1,6 +1,6 @@
 import os
 from dotenv import load_dotenv
-from flask import request, jsonify, redirect, abort
+from flask import request, jsonify
 from classes.link import Link
 from classes.image import Image
 from classes.database import Database
@@ -86,8 +86,10 @@ def download_image(key: str) -> tuple:
                     <html lang="en">
                     <head>
                         <meta charset="UTF-8">
-                        <link rel="icon" type="image/x-icon" href="../res/nrf_logo.png">
+                        <link rel="icon" type="image/x-icon" href="/static/images/nrf_logo.png">
                         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+                        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
                         <title>Images Hub</title>
                         <style>
                             body {{
@@ -118,7 +120,8 @@ def download_image(key: str) -> tuple:
                                 text-decoration: none;
                             }}
                             .logo{{
-                                margin: 10px;
+                                margin: 20px;
+                                height: 150px;
                             }}
                             @keyframes pulse {{
                                 0% {{ transform: scale(1); }}
@@ -129,8 +132,13 @@ def download_image(key: str) -> tuple:
                     </head>
                     <body>
                         <div class="failed-container">
-                            <img src="{{ url_for('res', filename='sarao_logo.png') }}" alt="SARAO Logo" class="logo">
-                            <img src="/static/failed_download.png" alt="Failed Download" class="failed-image">
+                            <img src="/static/images/sarao_logo.png" alt="SARAO Logo" class="logo">
+                            <div>
+                                <span class="fa-stack fa-lg">
+                                    <i class="fa fa-download fa-stack-1x"></i>
+                                    <i class="fa fa-ban fa-stack-2x text-danger"></i>
+                                </span>
+                            </div>
                             <div class="failed-message">
                                 The download link has expired. Please go back to the app and request the image again.
                             </div>
@@ -158,7 +166,7 @@ def download_image(key: str) -> tuple:
                         <head>
                             <meta charset="UTF-8">
                             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-                            <link rel="icon" type="image/x-icon" href="../res/nrf_logo.png">
+                            <link rel="icon" type="image/x-icon" href="/static/images/nrf_logo.png">
                             <title>Images Hub</title>
                             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
                             <style>
@@ -197,7 +205,8 @@ def download_image(key: str) -> tuple:
                                     text-decoration: none;
                                 }}
                                 .logo{{
-                                    margin: 10px;
+                                    margin: 20px;
+                                    height: 150px;
                                 }}
                                 @keyframes pulse {{
                                     0% {{ transform: scale(1); }}
@@ -213,10 +222,16 @@ def download_image(key: str) -> tuple:
                         </head>
                         <body>
                             <div class="download-container">
-                                <img src="{{ url_for('res', filename='sarao_logo.png') }}" alt="SARAO Logo" class="logo" s>
-                                <a href="{high_res_download_url}" class="download-link">
+                                <script>
+                                    window.onload = function() {{
+                                        window.location.href = '{ high_res_download_url }';
+                                        document.querySelector('.download-status').textContent = "Download has already begun...";
+                                    }}
+                                </script>
+                                <img src="/static/images/sarao_logo.png" alt="SARAO Logo" class="logo">
+                                <a href="#" class="download-link" onclick="location.reload()">
                                     <i class="fa fa-download" aria-hidden="true"></i>
-                                </a>
+                                </a> 
                                 <div class="download-status">
                                     Downloading image...
                                 </div>
