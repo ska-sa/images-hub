@@ -4,8 +4,6 @@ backend/__pycache__/
 
 backend/.env
 
-backend/res/
-
 backend/.pytest_cache/
 
 backend/classes/__pycache__/
