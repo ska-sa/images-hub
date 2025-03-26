@@ -97,7 +97,7 @@ def post_request() -> tuple:
 def put_request() -> tuple:
     """
     Description: Handling the PUT /api/v2/requests endpoint.
-    Input: JSON with ('id', 'user_id', 'img_id', 'reason', 'status', 'created_at').
+    Input: JSON with ('id', 'user_id', 'image_id', 'reason', 'status', 'created_at').
     Output: JSON with 'message' key indicating success or failure.
     """
     load_dotenv()
