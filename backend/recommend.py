@@ -8,7 +8,7 @@ from classes.link import Link
 
 def apply_randomness(score: float):
     if score == 0.0:
-        score = float(random.randint(0, 15)) / 100000.0
+        score = float(random.randint(0, 10)) / 100000.0
     else:
         score *= float(100.0 - random.randint(-10, 10)) / 100.0
     return score
@@ -74,6 +74,8 @@ def compute_image_rating(images: list[Image], requests: list[Request], links: li
     images_realtime_scores: list[tuple[Image, list[tuple[datetime, float]]]] = list()
 
     for image in images:
+        min_created_at: datetime = image.created_at
+        max_created_at: datetime = min(image.created_at + timedelta(days=1), datetime.now())
         image_realtime_scores: list[tuple[datetime, float]] = list()
         # Calculate request scores
         for request in requests:
@@ -85,18 +87,37 @@ def compute_image_rating(images: list[Image], requests: list[Request], links: li
                 # Append new score into image_realtime_scores
                 image_realtime_scores.append((request.created_at, new_score))
 
+
+            if min_created_at > request.created_at:
+                min_created_at = request.created_at
+
+            if max_created_at < request.created_at:
+                max_created_at = request.created_at
+
         for link in links:
             if link.image_id == image.id:
-                new_score = request_weight
+                new_score = link_weight
                 # Apply randomness to the score
                 new_score = apply_randomness(new_score)
 
                 # Append new score into image_realtime_scores
                 image_realtime_scores.append((link.created_at, new_score))
 
+            
+
+            if min_created_at > link.created_at:
+                min_created_at = request.created_at
+
+            if max_created_at < link.created_at:
+                max_created_at = request.created_at
 
         # Sort images_realtime_scores in datetime ascending order
-        sorted_image_realtime_scores: list[tuple[datetime, float]] = sorted(image_realtime_scores, key=lambda readltime_score: readltime_score[1], reverse=True)
+        sorted_image_realtime_scores: list[tuple[datetime, float]] = sorted(image_realtime_scores, key=lambda readltime_score: readltime_score[0], reverse=False)
+        if len(sorted_image_realtime_scores) == 0:
+            new_score = apply_randomness(0)
+            sorted_image_realtime_scores.append((min_created_at, new_score))
+            sorted_image_realtime_scores.append((max_created_at, apply_randomness(new_score * 1.1)))
+            
         images_realtime_scores.append((image, sorted_image_realtime_scores))
     
     #for image, image_realtime_scores in images_realtime_scores:
@@ -104,23 +125,36 @@ def compute_image_rating(images: list[Image], requests: list[Request], links: li
     
     return images_realtime_scores
 
-def plot_image_scores(score_history: list[tuple[datetime, float]], output_path: str) -> None:
+def plot_image_scores(images_score_history: list[tuple[int, list[tuple[datetime, float]]]], output_path: str) -> None:
     fig, ax = plt.subplots(figsize=(12, 6))
 
-    if score_history:
-        timestamps, scores = zip(*score_history)
-        ax.plot(timestamps, scores, marker='o', label="Image Scores Over Time")
-    else:
-        ax.set_title("No Data Available")
-        ax.set_xlabel("Datetime")
-        ax.set_ylabel("Score")
-        ax.text(0.5, 0.5, "No scores to display", horizontalalignment='center', verticalalignment='center', transform=ax.transAxes)
+    now = datetime.now()
+    max_datetime = now
+    min_datetime = now - timedelta(days=30)  # Show data for the last 30 days
+
+    for image, scores in images_score_history:
+        image_id = image.id
+        if not scores:
+            # If the scores list is empty, add a single data point with score 0 at the current time
+            ax.step([now, now], [0, 0], where='post', label=f"Image {image_id}", marker='o')
+        else:
+            timestamps, scores = zip(*scores)
+            max_datetime = max(max_datetime, max(timestamps))
+            min_datetime = min(min_datetime, min(timestamps))
+
+            # Create a step graph with markers
+            ax.step(timestamps, scores, where='post', label=f"Image {image_id}", marker='o')
+
+    # Add a legend with the image IDs
+    handles, labels = ax.get_legend_handles_labels()
+    ax.legend(handles, [f"Image {label.split(' ')[1]}" for label in labels], loc='upper left')
 
     ax.set_xlabel("Datetime")
     ax.set_ylabel("Score")
     ax.set_title("Image Scores Over Time")
-    #ax.legend()
+    ax.set_xlim(min_datetime, max_datetime)
     plt.savefig(output_path)
+    plt.close()
 
 def test_recommend(images: list[Image], requests: list[Request], links: list[Link]):
     # Test with different datasets
@@ -139,37 +173,29 @@ def test_recommend(images: list[Image], requests: list[Request], links: list[Lin
         (9, 2, 6, [1, 2, 9]),  # Test case 10: 9 images, 2 requests, 6 links, expected_image image.id = 1, 2, 9 2025 03 30 
     ]
     
+    
+    
     for i, test_case in enumerate(test_cases):
+        images_realtime_cumulative_score: list[tuple[Image, list[tuple[datetime, float]]]] = list()
         num_images, num_requests, num_links, expected_highly_recommended_image_ids = test_case
         images_realtime_scores = compute_image_rating(images[:num_images], requests[:num_requests], links[:num_links])
         
         
+        
         for image, image_realtime_scores in images_realtime_scores:
-            cumulative_score: float = 0.0
             realtime_cumulative_scores = list()
+            cumulative_score: float = 0.0
             if len(image_realtime_scores) > 0:
                 latest_datetime = image_realtime_scores[-1][0]
-                for datetime, score in image_realtime_scores:
-                    cumulative_score += score * math.pow(1.05, (0 - (latest_datetime - datetime).total_seconds() / (60 * 60 * 24)))
-                    realtime_cumulative_scores.append((datetime, cumulative_score))
-
-            plot_image_scores(realtime_cumulative_scores, f"outputs/test_{i}.png")
+                for created_at, score in image_realtime_scores:
+                    cumulative_score += score * math.pow(1.01, (0 - (latest_datetime - created_at).total_seconds() / (60 * 60 * 24)))
+                    realtime_cumulative_scores.append((created_at, cumulative_score))
+            images_realtime_cumulative_score.append((image, realtime_cumulative_scores))
+            #print((image.id, realtime_cumulative_scores))
+        #print()
+        plot_image_scores(images_realtime_cumulative_score, f"outputs/test_{i}.png")
             #print(image.id, [score for _, score in image_realtime_scores])
-        """
-        sorted_image_score_list, score_history = compute_image_scores(images[:num_images], requests[:num_requests], links[:num_links])
-        
-        #print(sorted_image_id_score_list)
-        # Determine the highly recommended image
-        highly_recommended_image_id = sorted_image_score_list[0][0].id if sorted_image_score_list else None
-        highly_recommended_image_score = sorted_image_score_list[0][1] if sorted_image_score_list else None
-        
-        if i == 5:
-            break
-        
-        plot_image_scores(score_history, f"outputs/test_{i}.png")
-        print(f"Test {i}:", "Pass" if highly_recommended_image_id in expected_highly_recommended_image_ids else "Fail")
-        print(f"\tHighly Recommended Image: image.id={highly_recommended_image_id}, image score={highly_recommended_image_score}\n")
-        """
+
 
 def main() -> None:
     images = [
