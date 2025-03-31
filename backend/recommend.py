@@ -132,24 +132,10 @@ def test_recommend(images: list[Image], requests: list[Request], links: list[Lin
     for i, test_case in enumerate(test_cases):
         images_realtime_cumulative_score: list[tuple[Image, list[tuple[datetime, float]]]] = list()
         num_images, num_requests, num_links, expected_highly_recommended_image_ids = test_case
-        images_realtime_scores = compute_image_rating(images[:num_images], requests[:num_requests], links[:num_links])
+        images_realtime_cumulative_score = compute_image_rating(images[:num_images], requests[:num_requests], links[:num_links])
         
-        
-        
-        for image, image_realtime_scores in images_realtime_scores:
-            realtime_cumulative_scores = list()
-            cumulative_score: float = 0.0
-            if len(image_realtime_scores) > 0:
-                latest_datetime = image_realtime_scores[-1][0]
-                for created_at, score in image_realtime_scores:
-                    cumulative_score += score * math.pow(1.01, (0 - (latest_datetime - created_at).total_seconds() / (60 * 60 * 24)))
-                    realtime_cumulative_scores.append((created_at, cumulative_score))
-            images_realtime_cumulative_score.append((image, realtime_cumulative_scores))
-            #print((image.id, realtime_cumulative_scores))
-        #print()
         plot_image_scores(images_realtime_cumulative_score, f"outputs/test_{i}.png")
-            #print(image.id, [score for _, score in image_realtime_scores])
-
+        
 
 def main() -> None:
     images = [
