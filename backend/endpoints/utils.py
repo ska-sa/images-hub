@@ -1,7 +1,10 @@
+import os
 import random
+from dotenv import load_dotenv
 from datetime import datetime, timedelta
 import math
 import matplotlib.pyplot as plt
+from classes.database import Database
 from classes.image import Image
 from classes.request import Request
 from classes.link import Link
@@ -79,5 +82,35 @@ def compute_image_rating(images: list[Image], requests: list[Request], links: li
     
     return images_realtime_cumulative_score
 
-def get_recommended_images() -> tuple:
-    pass
+def get_recommended_images() -> list[Image]:
+
+    load_dotenv()
+    db = Database()   
+
+    images: list[Image] = list()
+    imgs = db.read("image")
+    for img in imgs:
+        images.append(Image(*img))
+
+    requests: list[Request] = list()
+    reqs = db.read("request")
+    for req in reqs:
+        requests.append(Request(*req))
+
+    links: list[Link] = list()
+    lnks = db.read("link")
+    for lnk in lnks:
+        links.append(Link(*lnk))
+
+    images_realtime_cumulative_score = compute_image_rating(images, requests, links)
+
+    recommended_images: list[Image] = [image for image, _ in images_realtime_cumulative_score]
+    return recommended_images
+
+def main() -> None:
+    recommended_images: list[Image] = get_recommended_images()
+    for recommended_image in recommended_images:
+        print(recommended_image.id)
+
+if __name__ == "__name__":
+    main()
