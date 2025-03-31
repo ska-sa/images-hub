@@ -20,6 +20,7 @@ def compute_image_rating(images: list[Image], requests: list[Request], links: li
     images_realtime_scores: list[tuple[Image, list[tuple[datetime, float]]]] = list()
 
     for image in images:
+        print(image)
         min_created_at: datetime = image.created_at
         max_created_at: datetime = min(image.created_at + timedelta(days=1), datetime.now())
         image_realtime_scores: list[tuple[datetime, float]] = list()
@@ -90,17 +91,31 @@ def get_recommended_images() -> list[Image]:
     images: list[Image] = list()
     imgs = db.read("image")
     for img in imgs:
-        images.append(Image(*img))
+        created_at_str = img[-1]  # Get the last element
+        created_at = datetime.strptime(created_at_str, '%Y-%m-%d %H:%M:%S')  # Convert string to datetime
+
+        # Pass all but the last element to Image, along with the converted created_at
+        images.append(Image(*img[:-1], created_at))
 
     requests: list[Request] = list()
     reqs = db.read("request")
     for req in reqs:
-        requests.append(Request(*req))
+        created_at_str = req[-1]  # Get the last element
+        created_at = datetime.strptime(created_at_str, '%Y-%m-%d %H:%M:%S')  # Convert string to datetime
+
+        # Pass all but the last element to Request, along with the converted created_at
+        requests.append(Request(*req[:-1], created_at))
 
     links: list[Link] = list()
     lnks = db.read("link")
     for lnk in lnks:
-        links.append(Link(*lnk))
+        created_at_str = lnk[-1]  # Get the last element
+        created_at = datetime.strptime(created_at_str, '%Y-%m-%d %H:%M:%S')  # Convert string to datetime
+
+        # Pass all but the last element to Link, along with the converted created_at
+        links.append(Link(*lnk[:-1], created_at))
+
+   
 
     images_realtime_cumulative_score = compute_image_rating(images, requests, links)
 
