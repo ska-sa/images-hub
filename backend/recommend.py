@@ -79,7 +79,7 @@ def compute_image_rating(images: list[Image], requests: list[Request], links: li
     
     return images_realtime_cumulative_score
 
-def plot_image_scores(images_score_history: list[tuple[int, list[tuple[datetime, float]]]], output_path: str) -> None:
+def plot_image_scores(images_score_history: list[tuple[Image, list[tuple[datetime, float]]]], output_path: str) -> None:
     fig, ax = plt.subplots(figsize=(12, 6))
 
     now = datetime.now()
