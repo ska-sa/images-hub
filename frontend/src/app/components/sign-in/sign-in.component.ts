@@ -28,10 +28,7 @@ export class SignInComponent {
       this.isSignedIn = isLoggedIn;
     });
   
-    //console.log(this.emailWithGoogle);
-    if(this.emailWithGoogle == null) {
-      this.signInWithGoogle()
-    }
+    
   }
 
   ngOnInit(): void {
@@ -68,6 +65,9 @@ export class SignInComponent {
     //console.log(this.emailWithGoogle);
     let emailAddress = '';
     emailAddress = this.emailWithGoogle;
+    if (this.emailWithGoogle == null) {
+      return
+    }
     this.userService.signIn(emailAddress).subscribe({
       next: (user: User) => {
         //console.log(user);

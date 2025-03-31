@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
   }
 
   signOut(): void {
-    this.userService.setUser(null);
+    this.userService.signOut();
     this.router.navigate(['/sign-in']);
   }
 }

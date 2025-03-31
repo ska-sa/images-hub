@@ -74,7 +74,10 @@ export class UserService {
         }
       );
   }
-  
+  public signOut(): void {
+    this.setUser(null); // Clear the user subject
+    localStorage.removeItem('user'); // Remove user info from local storage
+  }
 
   public getSignedInUser(): User | null {
     if(!this.userSubject.value) {
