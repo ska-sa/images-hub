@@ -14,6 +14,7 @@ from endpoints.users import get_users, get_user, post_user, auth, put_user, dele
 from endpoints.images import get_images, get_image, get_image_s3_url, upload_image, put_image, delete_image
 from endpoints.requests import get_requests, get_request, post_request, put_request, delete_request
 from endpoints.links import get_links, get_link, download_image, post_link, put_link, delete_link
+from endpoints.utils import get_recommended_images
 
 app = Flask(__name__)
 
@@ -111,7 +112,8 @@ def get_images_route():
     validation_response = backend.validate_api_key()
     if validation_response:
         return validation_response
-    return get_images()
+    #return get_images()
+    return jsonify([image.toJSON() for image in get_recommended_images()]), 200
 
 @app.route('/api/v1/images/<int:id>', methods=['GET'])
 def get_image_route(id: int):
