@@ -13,63 +13,6 @@ def apply_randomness(score: float):
         score *= float(100.0 - random.randint(-10, 10)) / 100.0
     return score
 
-def compute_image_scores(images: list[Image], requests: list[Request], links: list[Link], request_weight: float = 0.5, link_weight: float = 0.75) -> tuple[list[Image], list[tuple[datetime, float]]]:
-    now = datetime.now()
-    image_scores = []
-    score_history = []
-    
-    # Calculate scores for each image
-    for image in images:
-        score = 0.0
-        timestamps = []
-
-        # Calculate request scores
-        for request in requests:
-            if request.image_id == image.id:
-                request_score = math.pow(1.05, (0 - (now - request.created_at).total_seconds() / (60 * 60 * 24)))
-                new_score = request_weight * request_score
-                timestamps.append((request.created_at, new_score))
-
-                # Apply randomness to the score
-                new_score = apply_randomness(new_score)
-                score += new_score
-                # Append to score hisory
-                score_history.append((request.created_at, score))
-
-        # Calculate link scores
-        for link in links:
-            if link.image_id == image.id:
-                link_score = math.pow(1.05, (0 - (now - link.created_at).total_seconds() / (60 * 60 * 24)))
-                new_score = link_weight * link_score
-                timestamps.append((link.created_at, new_score))
-                # Apply randomness to the score
-                new_score = apply_randomness(new_score)
-
-                score += new_score
-        
-                # Append to score hisory
-                score_history.append((link.created_at, score))
-        
-        image_scores.append((image, score))
-
-        """
-        # Add timestamps for the last 30 days
-        for days_ago in range(30):
-            past_date = now - timedelta(days=days_ago)
-            if timestamps:
-                # Use the latest score for the past date
-                latest_score = max([s[1] for s in timestamps if s[0] <= past_date], default=0)
-                score_history.append((past_date, latest_score))
-        """
-
-
-    # Sort images based on scores in descending order
-    sorted_image_id_score_list = sorted(image_scores, key=lambda x: x[1], reverse=True)
-
-
-    # Extract sorted images from the tuples
-    return sorted_image_id_score_list, score_history
-
 def compute_image_rating(images: list[Image], requests: list[Request], links: list[Link], request_weight: float = 0.5, link_weight: float = 0.75):
     images_realtime_scores: list[tuple[Image, list[tuple[datetime, float]]]] = list()
 
@@ -120,10 +63,21 @@ def compute_image_rating(images: list[Image], requests: list[Request], links: li
             
         images_realtime_scores.append((image, sorted_image_realtime_scores))
     
-    #for image, image_realtime_scores in images_realtime_scores:
-    #    print(image.id, [score for _, score in image_realtime_scores])
+
+
+    images_realtime_cumulative_score: list[tuple[Image, list[tuple[datetime, float]]]] = list()
     
-    return images_realtime_scores
+    for image, image_realtime_scores in images_realtime_scores:
+        realtime_cumulative_scores = list()
+        cumulative_score: float = 0.0
+        if len(image_realtime_scores) > 0:
+            latest_datetime = image_realtime_scores[-1][0]
+            for created_at, score in image_realtime_scores:
+                cumulative_score += score * math.pow(1.01, (0 - (latest_datetime - created_at).total_seconds() / (60 * 60 * 24)))
+                realtime_cumulative_scores.append((created_at, cumulative_score))
+        images_realtime_cumulative_score.append((image, realtime_cumulative_scores))
+    
+    return images_realtime_cumulative_score
 
 def plot_image_scores(images_score_history: list[tuple[int, list[tuple[datetime, float]]]], output_path: str) -> None:
     fig, ax = plt.subplots(figsize=(12, 6))
