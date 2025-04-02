@@ -16,8 +16,35 @@ COPY . .
 # Command to run the application with production environment
 CMD ["python", "main.py", "--env", "production"]
 
+
+
+# ============================== #
+#         Docker Images          #       
+# ============================== #
+
 # Building this docker image
 # docker build -t <image_name> <path/to/project>
 
-# Running the built docker image
-# docker run --env-file <path/to/.env> -p 5000:5000 <image_name>
+# Listing docker images
+# docker images
+
+# Deleting a docker image
+# docker rmi <images_id>
+
+
+
+# ============================== #
+#       Docker Containers        #
+# ============================== #
+
+# Running the built docker image in a detached mode
+# docker run -d --env-file <path/to/.env> -p 5000:5000 <image_name>
+
+# Listing docker containers
+# docker ps
+
+# Opening docker container bash
+# docker exec -it <container_id> bash
+
+# Deleting a docker container
+# docker rm <container_id>
