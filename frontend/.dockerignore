@@ -40,4 +40,4 @@ typings
 Thumbs.db
 
 # Environment files
-#src/environments
+src/environments
