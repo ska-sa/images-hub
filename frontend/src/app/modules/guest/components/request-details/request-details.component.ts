@@ -13,11 +13,9 @@ import { UserService } from '../../../../services/user.service';
 })
 export class RequestDetailsComponent {
   private request: Request | any = null;
-  private regExp: string = '^[a-zA-Z0-9_]*$';
   public formGroup = new FormGroup({
     reason: new FormControl('',[
       Validators.required,
-      //Validators.pattern(this.regExp)
     ]
     )
   });
@@ -30,7 +28,7 @@ export class RequestDetailsComponent {
   ngOnInit(): void {
     this.requestService.getRequests().subscribe({
       next: (reqs) => {
-        const req = reqs.filter(req => req.user_id == this.userService.getSignedInUser()?.id || req.image_id == this.data.image.id);
+        const req = reqs.filter(req => req.user_id == this.userService.getSignedInUser()?.id && req.image_id == this.data.image.id);
         if(req){
           this.request = req[0];
         }
@@ -44,7 +42,9 @@ export class RequestDetailsComponent {
   }
 
   submitRequest(): void {
-    if(this.request) {
+    if(this.request?.image_id == this.data?.image.id) {
+      console.log(this.data.image)
+      console.log(this.request)
       alert(`You have already submitted a request for this image, please wait for approval`);
     } else {
       const req: Request = {
@@ -56,7 +56,10 @@ export class RequestDetailsComponent {
         created_at: ''
       }
       this.requestService.addRequest(req).subscribe({
-        next: res => { alert(`You have succesfully submitted a request for an image ${this.data.image.high_res_image_filename}, please wait for approval`); },
+        next: res => { 
+          /*alert(`You have succesfully submitted a request for an image ${this.data.image.high_res_image_filename}, please wait for approval`);*/ 
+          this.close();
+        },
         error: err => { console.log(err) }
       })
     }
