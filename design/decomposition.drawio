@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="PH3x6NAS6UUTNjEZrtSC" name="Page-1">
-        <mxGraphModel dx="3441" dy="-573" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="3395" dy="-673" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="0"/>
                 <mxCell id="1" parent="0"/>
@@ -39,7 +39,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="7" value="&lt;b&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Images Hub Application&lt;/font&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;" parent="1" vertex="1">
+                <mxCell id="7" value="&lt;b&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Images Hub&lt;/font&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;" parent="1" vertex="1">
                     <mxGeometry x="-1800" y="1320" width="160" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="47" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="9" target="42" edge="1">
@@ -87,7 +87,7 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="68" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="10" target="67">
+                <mxCell id="68" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="10" target="67" edge="1">
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="-1840" y="1720"/>
@@ -118,13 +118,6 @@
                         </Array>
                     </mxGeometry>
                 </mxCell>
-                <mxCell id="59" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="11" target="21" edge="1">
-                    <mxGeometry relative="1" as="geometry">
-                        <Array as="points">
-                            <mxPoint x="-1640" y="1660"/>
-                        </Array>
-                    </mxGeometry>
-                </mxCell>
                 <mxCell id="11" value="&lt;span&gt;&lt;font style=&quot;color: rgb(0, 0, 0);&quot;&gt;Image Details (Model)&lt;/font&gt;&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=0" parent="1" vertex="1">
                     <mxGeometry x="-1800" y="1400" width="160" height="40" as="geometry"/>
                 </mxCell>
@@ -146,6 +139,13 @@
                     <mxGeometry relative="1" as="geometry">
                         <Array as="points">
                             <mxPoint x="-1440" y="1600"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="70" style="edgeStyle=none;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="12" target="69">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="-1440" y="1660"/>
                         </Array>
                     </mxGeometry>
                 </mxCell>
@@ -172,23 +172,20 @@
                 <mxCell id="15" value="Athenticate and Redirect Accordingly" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-2200" y="1520" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="16" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Allow Admin Generate Image Download Link&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
+                <mxCell id="16" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Allow Admin to Upload new Images&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-2000" y="1580" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="17" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Allow User to Filter Images with Filenames&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
+                <mxCell id="17" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Allow Admin Generate Image Download Links&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-2000" y="1640" width="140" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="18" value="Diplay High Res Image if is Access is granted" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-1800" y="1460" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="19" value="Else Prompt Guest to Submit a Request" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
+                <mxCell id="19" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Allow User to Download Image&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-1800" y="1520" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="20" value="Display Grid of Low Res Images from DB" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
+                <mxCell id="20" value="Render Grid of Trending Images from DB" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-2000" y="1460" width="140" height="40" as="geometry"/>
-                </mxCell>
-                <mxCell id="21" value="Allow User to Close this Model" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
-                    <mxGeometry x="-1800" y="1640" width="140" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="22" value="Display Table of Requests from DB" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-1600" y="1460" width="140" height="40" as="geometry"/>
@@ -196,26 +193,29 @@
                 <mxCell id="23" value="Allow Admin to Filter Requests with Email" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-1600" y="1520" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="24" value="Allow User to Sign out" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
+                <mxCell id="24" value="Allow the Admin to Review and Grant Acess" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-1600" y="1580" width="140" height="40" as="geometry"/>
                 </mxCell>
                 <mxCell id="25" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Allow User to Close this Model&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-1400" y="1520" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="26" value="Promopt the Guest User to Submit a Request" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
+                <mxCell id="26" value="Prompt the Guest User to Submit a Request" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-1400" y="1460" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="27" value="Allow User to Download Image" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
+                <mxCell id="27" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Allow User to Close this Model&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-1800" y="1580" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="42" value="Prompt User Sign In with Google" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
+                <mxCell id="42" value="Prompt User Sign In with their Google" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-2200" y="1460" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="49" value="Allow Admin Upload Images" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
+                <mxCell id="49" value="&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;Allow User to Filter Images with Filenames&lt;/span&gt;" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-2000" y="1520" width="140" height="40" as="geometry"/>
                 </mxCell>
-                <mxCell id="67" value="Allow User to Sign out" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" vertex="1" parent="1">
+                <mxCell id="67" value="Allow User to Sign out" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" parent="1" vertex="1">
                     <mxGeometry x="-2000" y="1700" width="140" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="69" value="Allow User to Sign out" style="rounded=0;whiteSpace=wrap;html=1;labelBackgroundColor=none;strokeColor=#000000;strokeWidth=1;fontColor=#000000;fillColor=#FFFFFF;fontStyle=2" vertex="1" parent="1">
+                    <mxGeometry x="-1600" y="1640" width="140" height="40" as="geometry"/>
                 </mxCell>
             </root>
         </mxGraphModel>
