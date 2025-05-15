@@ -165,41 +165,81 @@ The frontend of this application is built using Angular 16, which incorporates H
 </ul>
 
 ## Getting Started
-To clone and run this project, follow these steps:
+
+### Cloning the repository
+
+- To clone repository:
 
 `git clone https://github.com/ska-sa/images-hub.git`
+
+### Directoroty Navigation
+
+- Open two terminal, and navigate to the project directory:
+
 `cd images-hub`
 
-### Running the Application with Virtual Environments\
-Now split our terminal, and ensure that both are point at the project (images-hub).
+### Running Backend with Virtual Environments
 
-Setup the backend:
-Navigate to the backend folder:
+- On the first terminal, navigate to the `backend` directory:
 
 `cd backend`
-Create a Python virtual environment and activate it:
 
-`python3 -m virtualenv venv`
+- Create a Python Virtual Environment:
+
+`virtualenv venv`
+
+- Activate Virtual Environment:
+
 `. venv/bin/activate`
-Install the required packages:
+
+- Install dependencies:
 
 `venv/bin/python -m pip install -r requirements.txt`
-Running the backend application:
 
-`venv/bin/python -m main.py --env production`
-Setup the frontend:
-On the other terminal, navigate to the frontend folder:
+- Run the backend script and select production database:
+
+`venv/bin/python main.py --env production`
+
+### Running Frontend with Node Package Manager
+
+- On the second terminal, navigate to the `frontend` directory:
 
 `cd frontend`
-Install the required packages:
+
+- Install the required packages:
 
 `npm install`
-Running the fontend application:
+
+- Run the `fontend` application:
 
 `ng serve --port 3000`
 
-
 ### Running the Application with Docker
+
+- To create `backend` docker image:
+
+`docker build -t images-hub-backend-image .`
+
+- To run the `backend` image:
+
+```
+docker run -it --name images-hub-backend-container \
+    -v ./.env:/app/.env \
+    -v ./databases:/app/databases \
+    -p 5000:5000 \
+    images-hub-backend-image
+```
+
+- To create `frontend` docker image:
+
+`docker build -t images-hub-frontend-image`
+
+- To run the `frontend` image:
+
+```
+docker run -it --name images-hub-frontend-container \
+    -v 
+
 Download our images from dockerhub:
 
 `docker image pull images-hub-backend`
