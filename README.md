@@ -198,7 +198,7 @@ The frontend of this application is built using Angular 16, which incorporates H
 
 - Run the backend script and select production database:
 
-`venv/bin/python main.py --env production`
+`venv/bin/python -m gunicorn --bind 0.0.0.0:5000 main:app`
 
 ### Running Frontend with Node Package Manager
 
@@ -232,13 +232,17 @@ docker run -it --name images-hub-backend-container \
 
 - To create `frontend` docker image:
 
-`docker build -t images-hub-frontend-image`
+`docker build -t images-hub-frontend-image .`
 
 - To run the `frontend` image:
 
 ```
 docker run -it --name images-hub-frontend-container \
-    -v 
+    -v ./backend/.env:/app/app.env \
+    -p 3000:80 \
+    images-hub-frontend-image \
+    sh -c "sh /app/update-env.sh && nginx -g 'daemon off;'"
+```
 
 Download our images from dockerhub:
 
